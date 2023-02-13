@@ -1,5 +1,7 @@
 # Ledger Fresh web
 
+![Quality checks](https://github.com/ledgerhq/ledger-fresh-web/actions/workflows/quality.yml/badge.svg?branch=main)
+
 This is the webapp of Ledger Fresh, our open source web wallet based on the account abstraction.
 
 Wanna chat with us? Join our [Discord channel](https://discord.com/channels/885256081289379850/1053266126953529374)

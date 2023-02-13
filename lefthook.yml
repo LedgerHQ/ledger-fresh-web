@@ -7,5 +7,6 @@ pre-push:
       run: pnpm prettier
     build:
       run: pnpm build
-    # TODO: add unit test script here
+    jest:
+      run: pnpm test
     # TODO: add e2e test script here

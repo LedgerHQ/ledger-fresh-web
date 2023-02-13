@@ -9,7 +9,8 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "lefthook": "lefthook run pre-push"
   },
   "dependencies": {
     "@next/font": "13.1.6",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0",
+    "lefthook": "^1.2.9",
     "prettier": "^2.8.4"
   }
 }

@@ -1,0 +1,11 @@
+pre-push:
+  parallel: true
+  commands:
+    eslint:
+      run: pnpm lint
+    prettier:
+      run: pnpm prettier
+    build:
+      run: pnpm build
+    # TODO: add unit test script here
+    # TODO: add e2e test script here

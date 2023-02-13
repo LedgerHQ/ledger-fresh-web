@@ -8,5 +8,5 @@ pre-push:
     build:
       run: pnpm build
     jest:
-      run: pnpm test
+      run: pnpm test:ci
     # TODO: add e2e test script here

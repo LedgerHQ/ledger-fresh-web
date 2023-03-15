@@ -1,11 +1,33 @@
 .page {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 100vh;
+}
+
+.bg {
+  position: absolute;
+  width: 60%;
+  height: 249px;
+  left: -25px;
+  top: 17%;
+  background-color: #7ba3ef;
+  filter: blur(72px);
+}
+
+.bg2 {
+  position: absolute;
+  width: 185px;
+  height: 122px;
+  left: 209px;
+  top: 55%;
+  background-color: #7ba3ef;
+  filter: blur(72px);
 }
 
 .main {
+  backdrop-filter: blur(10px);
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,7 +35,6 @@
   text-align: center;
   padding: 5rem;
   font-weight: 600;
-  /* background-color: black; */
 }
 .main h1 {
   font-weight: 600;

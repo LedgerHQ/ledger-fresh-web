@@ -12,7 +12,9 @@ export default function Emboarding() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={clsx(styles.page, styles.bg)}>
+      <div className={clsx(styles.bg)}></div>
+      <div className={clsx(styles.bg2)}></div>
+      <div className={clsx(styles.page)}>
         <main className={styles.main}>
           <h1>Welcome to Ledger Fresh</h1>
         </main>

@@ -8,29 +8,32 @@ interface Props {
   icon?: ReactNode;
 }
 
-export const Button = forwardRef<
-  HTMLButtonElement,
-  ComponentProps<"button"> & Props
->(({ variant = "primary", icon, children, className, ...props }, ref) => (
-  <button
-    ref={ref}
-    className={clsx(
-      className,
-      styles.button,
-      icon && !children && styles.iconButton,
-      {
-        [styles.buttonPrimary]: variant === "primary",
-        [styles.buttonSecondary]: variant === "secondary",
-        [styles.buttonSubtle]: variant === "subtle",
-        [styles.buttonDestructive]: variant === "destructive",
-      }
-    )}
-    {...props}
-  >
-    {icon && <span className={styles.icon}>{icon}</span>}
-    {children && <span className={styles.label}>{children}</span>}
-  </button>
-));
+const Button = forwardRef<HTMLButtonElement, ComponentProps<"button"> & Props>(
+  ({ variant = "primary", icon, children, className, ...props }, ref) => (
+    <button
+      ref={ref}
+      className={clsx(
+        className,
+        styles.button,
+        icon && !children && styles.iconButton,
+        {
+          [styles.buttonPrimary]: variant === "primary",
+          [styles.buttonSecondary]: variant === "secondary",
+          [styles.buttonSubtle]: variant === "subtle",
+          [styles.buttonDestructive]: variant === "destructive",
+        }
+      )}
+      {...props}
+    >
+      {icon && <span className={styles.icon}>{icon}</span>}
+      {children && <span className={styles.label}>{children}</span>}
+    </button>
+  )
+);
+
+Button.displayName = "Button";
+
+export { Button };
 
 export function LinkButton({
   variant = "primary",

@@ -1,0 +1,28 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 5rem;
+  font-weight: 600;
+  /* background-color: black; */
+}
+.main h1 {
+  font-weight: 600;
+}
+
+.buttonRow {
+  padding: 2rem;
+}
+
+.emboarding_button {
+  margin-bottom: 1rem;
+}

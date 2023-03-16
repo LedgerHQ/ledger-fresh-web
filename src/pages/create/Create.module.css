@@ -1,0 +1,45 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  padding: 2rem;
+  font-weight: 600;
+}
+
+.title {
+  margin: 1em 0em 0.5em;
+}
+
+.subtitle {
+  color: rgb(var(--color-gray-500));
+  margin: 0 4em 1em 0;
+  font-weight: 500;
+}
+
+.title_separator {
+  color: rgb(var(--color-gray-500));
+  margin: 1.5em 4em 1.5em 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.main h2 {
+  font-weight: 600;
+}
+
+.buttonRow {
+  padding: 2rem;
+}
+
+.emboarding_button {
+  margin-bottom: 1rem;
+}

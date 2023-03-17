@@ -36,8 +36,18 @@
   font-weight: 600;
 }
 
-.buttonRow {
-  padding: 2rem;
+.icon {
+  padding: 0.5rem;
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  max-width: 36px;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1em;
 }
 
 .emboarding_button {

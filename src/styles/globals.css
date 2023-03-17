@@ -99,7 +99,7 @@
   --color-text-light: rgb(var(--color-gray-600));
   --color-text-lighter: rgb(var(--color-gray-500));
   --color-text-lightest: rgb(var(--color-gray-400));
-
+  --color-card-bg: #f4f4f4;
   color-scheme: light;
 }
 
@@ -121,6 +121,7 @@
     --color-text-light: rgb(var(--color-gray-300));
     --color-text-lighter: rgb(var(--color-gray-400));
     --color-text-lightest: rgb(var(--color-gray-500));
+    --color-card-bg: rgba(25, 25, 25, 1);
 
     color-scheme: dark;
   }

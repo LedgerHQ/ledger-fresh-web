@@ -37,7 +37,9 @@ export function LinkCard({
       {...props}
     >
       <div className={styles.main}>
-        {/* {icon && <span className={styles.icon}>{icon}</span>} */}
+        <div className={styles.iconContainer}>
+          {icon && <span className={styles.icon}>{icon}</span>}
+        </div>
         <div>
           <h3> {title} </h3>
           <p className={styles.description}> {description}</p>

@@ -6,6 +6,11 @@
 .main {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.iconContainer {
+  margin-right: 0.5em;
 }
 
 .card span {
@@ -15,11 +20,14 @@
 
 .card h3 {
   font-weight: 600;
-  margin-bottom: 0.2rem;
   font-size: 16px;
+  letter-spacing: -0.02em;
 }
 
 .icon {
+  margin-top: 0.25em;
+  padding: 0.2em;
+  border-radius: 6px;
   background: rgba(72, 118, 206, 0.15);
 }
 

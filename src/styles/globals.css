@@ -135,7 +135,8 @@ body {
 html,
 body,
 #__next {
-  max-width: 100%;
+  max-width: 500px;
+  margin: 0 auto !important;
   min-height: 100vh;
 }
 

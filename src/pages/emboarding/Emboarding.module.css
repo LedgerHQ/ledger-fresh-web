@@ -7,9 +7,9 @@
 
 .bg {
   position: absolute;
-  width: 60%;
-  height: 249px;
-  left: -25px;
+  width: 25%;
+  height: 18%;
+  left: 28%;
   top: 17%;
   background-color: #7ba3ef;
   filter: blur(72px);
@@ -19,8 +19,8 @@
   position: absolute;
   width: 185px;
   height: 122px;
-  left: 209px;
-  top: 55%;
+  left: 55%;
+  top: 50%;
   background-color: #7ba3ef;
   filter: blur(72px);
 }

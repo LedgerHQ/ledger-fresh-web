@@ -25,7 +25,7 @@ export default function Create() {
           </h5>
 
           <LinkCard
-            href="/create/mobile"
+            href="/create/webauthn"
             title="With this mobile"
             description="Manage your wallet from Chrome on this mobile."
             icon={
@@ -51,7 +51,7 @@ export default function Create() {
           <h5 className={styles.title_separator}>OR use a portable signer</h5>
           <div className={styles.cardList}>
             <LinkCard
-              href="/create/mobile"
+              href="/create/usb"
               title="With a USB Security Key"
               icon={
                 <Image
@@ -75,7 +75,7 @@ export default function Create() {
               }
             ></LinkCard>
             <LinkCard
-              href="/create/mobile"
+              href="/create/ledger"
               title="With a Ledger"
               description="Sign transactions using your Ledger and 
             add extra layer of security"

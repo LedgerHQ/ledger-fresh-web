@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95vh;
+}
+
+.icon {
+  padding: 0.5rem;
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  max-width: 36px;
+  margin: 1em 0;
+}
+
+.input {
+  font-size: 32px;
+  margin: 1em 0;
+  background-color: transparent;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  text-align: left;
+  padding: 2rem;
+  font-weight: 600;
+}
+
+.main h2 {
+  font-weight: 600;
+}
+
+.main p {
+  margin: 0;
+  color: rgb(var(--color-gray-500));
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 23ch;
+}
+
+.buttonRow {
+  padding: 2rem;
+}

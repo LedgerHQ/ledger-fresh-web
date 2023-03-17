@@ -30,6 +30,15 @@ export default function Create() {
             href="/create/mobile"
             title="With this mobile"
             description="Manage your wallet from Chrome on this mobile."
+            icon={
+              <Image
+                src="/Icons/chrome.svg"
+                alt="back"
+                width={16}
+                height={14}
+                priority
+              />
+            }
             img={
               <Image
                 src="/Images/mobile.png"
@@ -72,6 +81,15 @@ export default function Create() {
             title="With a Ledger"
             description="Sign transactions using your Ledger and 
             add extra layer of security"
+            icon={
+              <Image
+                src="/Icons/ledgerlogo.svg"
+                alt="back"
+                width={16}
+                height={14}
+                priority
+              />
+            }
             img={
               <Image
                 src="/Images/ledger.png"

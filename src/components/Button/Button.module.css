@@ -10,6 +10,7 @@
   align-items: center;
   text-align: center;
   justify-content: space-around;
+  width: 100%;
 }
 
 .button:disabled {

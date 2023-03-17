@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95vh;
+}
+
+.icon {
+  padding: 0.5rem;
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  max-width: 36px;
+  margin: 1em 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  font-weight: 600;
+}
+
+.main h2 {
+  font-size: 24px;
+  font-weight: 600;
+  max-width: 23ch;
+}
+
+.buttonRow {
+  padding: 2rem;
+}
+
+.buttonRow button {
+  height: 55px;
+}
+
+.thumbnail {
+  background: linear-gradient(180deg, #bbe2ff 0%, #efdef5 100%);
+  border-radius: 54px;
+  width: 150px;
+  height: 150px;
+  left: calc(50% - 150px / 2);
+  margin-top: 40%;
+  margin-bottom: 2em;
+}

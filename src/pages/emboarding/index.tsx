@@ -1,7 +1,7 @@
 import Head from "next/head";
 import clsx from "clsx";
 import styles from "./Emboarding.module.css";
-import { Button, LinkButton } from "../../components/Button";
+import { Button, LinkButton } from "@/components/Button";
 
 export default function Emboarding() {
   return (

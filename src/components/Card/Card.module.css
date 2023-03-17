@@ -1,6 +1,8 @@
 .card {
-  padding: 1rem 1rem;
-  background: #f4f4f4;
+  padding: 1rem;
+  margin-bottom: 1em;
+  background: var(--color-card-bg);
+  border-radius: 12px;
 }
 
 .main {

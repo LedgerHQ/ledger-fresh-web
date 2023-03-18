@@ -22,7 +22,7 @@ export default function Onboarding() {
           <LinkButton
             href="/create"
             variant="primary"
-            className={styles.emboarding_button}
+            className={styles.onoarding_button}
           >
             Create a new wallet
           </LinkButton>

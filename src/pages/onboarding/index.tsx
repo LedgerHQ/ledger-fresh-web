@@ -1,9 +1,9 @@
 import Head from "next/head";
 import clsx from "clsx";
-import styles from "./Emboarding.module.css";
+import styles from "./Onboarding.module.css";
 import { Button, LinkButton } from "@/components/Button";
 
-export default function Emboarding() {
+export default function Onboarding() {
   return (
     <>
       <Head>

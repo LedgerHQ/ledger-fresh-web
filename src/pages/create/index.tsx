@@ -9,7 +9,7 @@ export default function Create() {
     <>
       <div className={clsx(styles.page)}>
         <main className={styles.main}>
-          <Link href="/emboarding" className={styles.icon}>
+          <Link href="/onboarding" className={styles.icon}>
             <Image
               src="/Icons/arrow-left-rtl.svg"
               alt="back"

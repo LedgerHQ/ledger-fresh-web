@@ -13,7 +13,7 @@ export default function Home() {
   // const credential = await navigator.credentials.get();
 
   return (
-    <div className={styles.page}>
+    <div className="page">
       <main className={styles.main}>
         <div className={styles.thumbnail}></div>
         <h2> Satoshigangsta created!</h2>

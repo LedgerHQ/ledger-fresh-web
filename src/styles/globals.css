@@ -148,3 +148,10 @@ html.grabbing {
 html.grabbing * {
   user-select: none;
 }
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95vh;
+}

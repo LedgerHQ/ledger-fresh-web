@@ -1,10 +1,3 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 95vh;
-}
-
 .bg {
   position: absolute;
   width: 25%;
@@ -27,7 +20,6 @@
 
 .main {
   backdrop-filter: blur(10px);
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,6 +28,7 @@
   padding: 5rem;
   font-weight: 600;
 }
+
 .main h1 {
   font-weight: 600;
 }

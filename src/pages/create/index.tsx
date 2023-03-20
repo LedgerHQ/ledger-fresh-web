@@ -7,7 +7,7 @@ import { LinkCard } from "@/components/Card";
 export default function Create() {
   return (
     <>
-      <div className={clsx(styles.page)}>
+      <div className="page">
         <main className={styles.main}>
           <Link href="/onboarding" className={styles.icon}>
             <Image

@@ -14,7 +14,7 @@ export default function Onboarding() {
       </Head>
       <div className={clsx(styles.bg)}></div>
       <div className={clsx(styles.bg2)}></div>
-      <div className={clsx(styles.page)}>
+      <div className="page">
         <main className={styles.main}>
           <h1>Welcome to Ledger Fresh</h1>
         </main>

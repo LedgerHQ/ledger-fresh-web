@@ -6,7 +6,7 @@ import { getKeyCredentialCreationOptions } from "@/utils/webauthn";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default function Created() {
   const [username, setUsername] = useState<string>("");
 
   useEffect(() => {

@@ -20,13 +20,10 @@
 
 .main {
   backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  padding: 5rem;
-  font-weight: 600;
+}
+
+.main h1 {
+  padding: 3rem;
 }
 
 .main h1 {

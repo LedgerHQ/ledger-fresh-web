@@ -1,14 +1,14 @@
-import clsx from "clsx";
 import styles from "./Create.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkCard } from "@/components/Card";
+import Main from "@/components/MainContainer";
 
 export default function Create() {
   return (
     <>
       <div className="page">
-        <main className={styles.main}>
+        <Main variant="left">
           <Link href="/onboarding" className={styles.icon}>
             <Image
               src="/Icons/arrow-left-rtl.svg"
@@ -98,7 +98,7 @@ export default function Create() {
               }
             />
           </div>
-        </main>
+        </Main>
       </div>
     </>
   );

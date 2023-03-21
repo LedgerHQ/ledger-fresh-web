@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Webauthn.module.css";
 import { Button } from "@/components/Button";
+import Main from "@/components/MainContainer";
 import { getKeyCredentialCreationOptions } from "@/utils/webauthn";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,8 +59,8 @@ export default function Webauthn() {
   };
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div className="page">
+      <Main>
         <Link href="/create" className={styles.icon}>
           <Image
             src="/Icons/arrow-left-rtl.svg"
@@ -71,7 +72,9 @@ export default function Webauthn() {
         </Link>
         <label htmlFor="username">
           <h2>Give a name to your wallet</h2>
-          <p>This name will be only displayed to you and stored locally.</p>
+          <p className={styles.subtitle}>
+            This name will be only displayed to you and stored locally.
+          </p>
         </label>
         <input
           className={styles.input}
@@ -81,7 +84,7 @@ export default function Webauthn() {
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Wallet name"
         />
-      </main>
+      </Main>
       <div className={styles.buttonRow}>
         <Button variant={username ? "primary" : "secondary"} onClick={register}>
           Create a new wallet

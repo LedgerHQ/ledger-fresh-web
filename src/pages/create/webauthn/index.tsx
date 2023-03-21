@@ -39,6 +39,7 @@ export default function Home() {
       // create the credential
       const credential = await navigator.credentials.create(options);
       console.log(credential);
+      localStorage.setItem("walletName", username);
 
       router.push("/created");
       /**

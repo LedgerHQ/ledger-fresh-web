@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Webauthn() {
   const [username, setUsername] = useState<string>("");
   const router = useRouter();
 

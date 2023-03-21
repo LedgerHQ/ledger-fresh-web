@@ -6,22 +6,6 @@
   margin: 1em 0;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  font-weight: 600;
-}
-
-.main h2 {
-  font-size: 24px;
-  font-weight: 600;
-  max-width: 23ch;
-}
-
 .buttonRow {
   padding: 2rem;
 }

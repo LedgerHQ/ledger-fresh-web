@@ -1,0 +1,57 @@
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 115%;
+  letter-spacing: -0.01em;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.thumbnail {
+  background: linear-gradient(180deg, #bbe2ff 0%, #f0f6fa 100%);
+  border-radius: 9px;
+  width: 25px;
+  height: 25px;
+  margin-right: 0.5em;
+}
+
+.actionRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.actionRow img {
+  margin-right: 0.5em;
+}
+
+.bg {
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  left: 5%;
+  top: -3px;
+  background-color: #7ba3ef;
+  filter: blur(32px);
+}
+
+.bg2 {
+  position: absolute;
+  width: 58px;
+  height: 26px;
+  left: 82%;
+  top: -4px;
+  background-color: #7ba3ef;
+  filter: blur(32px);
+}

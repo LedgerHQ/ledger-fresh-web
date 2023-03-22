@@ -9,7 +9,7 @@
 }
 
 .main[data-variant="left"] {
-  align-items: baseline;
+  align-items: normal;
   text-align: left;
 }
 

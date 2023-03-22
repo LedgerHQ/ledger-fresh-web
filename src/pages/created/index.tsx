@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./Created.module.css";
-import { Button } from "@/components/Button";
+import { LinkButton } from "@/components/Button";
 import Main from "@/components/MainContainer";
 
 export default function Created() {
@@ -19,7 +19,7 @@ export default function Created() {
       </Main>
       <div className={styles.buttonRow}>
         {/* eslint-disable-next-line */}
-        <Button>Let's go</Button>
+        <LinkButton href={"/"}>Let's go</LinkButton>
       </div>
     </div>
   );

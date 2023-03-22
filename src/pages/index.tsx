@@ -1,5 +1,8 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
+import Main from "@/components/MainContainer";
+import { Header } from "@/components/Header";
+import { LinkButton } from "@/components/Button";
 
 export default function Home() {
   return (
@@ -12,11 +15,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <Header />
+      <Main variant="centered">
         <div className={styles.description}>
           <h1>Ledger Fresh</h1>
         </div>
-      </main>
+        <LinkButton href={"/onboarding"}>Onboarding</LinkButton>
+      </Main>
     </>
   );
 }

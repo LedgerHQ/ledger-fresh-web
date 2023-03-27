@@ -39,8 +39,21 @@ export default function Webauthn() {
 
       // create the credential
       const credential = await navigator.credentials.create(options);
+
+      console.log(options);
+
       console.log(credential);
       localStorage.setItem("walletName", username);
+
+      if (!credential) throw "";
+      if (!options.publicKey) throw "";
+
+      const transaction_hash = await fetch("/api/deployer/deploy", {
+        method: "POST",
+        body: JSON.stringify({ pubKey: options.publicKey.user.name }),
+      });
+
+      console.log(transaction_hash);
 
       router.push("/created");
       /**

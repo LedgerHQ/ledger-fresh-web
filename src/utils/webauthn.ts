@@ -24,6 +24,7 @@ export const getKeyCredentialCreationOptions = (
     // wanna use another algorithms? Here's the list
     // https://www.iana.org/assignments/cose/cose.xhtml#algorithms
     pubKeyCredParams: [
+      { alg: 1, type: "public-key" },
       { alg: -7, type: "public-key" },
       { alg: -257, type: "public-key" },
     ],

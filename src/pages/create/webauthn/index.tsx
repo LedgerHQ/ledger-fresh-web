@@ -7,8 +7,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { create } from "@github/webauthn-json/browser-ponyfill";
-import ab2str from "arraybuffer-to-string";
 import { addAccount } from "@/services/accountStorage/account.storage";
+
+function ArrayBufferToString(
+  buffer: Buffer,
+  encoding: BufferEncoding | undefined
+) {
+  if (encoding == null) encoding = "utf8";
+
+  return Buffer.from(buffer).toString(encoding);
+}
 
 const network: any = process.env.NEXT_PUBLIC_NETWORK || "goerli-alpha";
 
@@ -50,7 +58,7 @@ export default function Webauthn() {
 
       // @ts-ignore
       const pubKeyBrut = credentials.response.getPublicKey();
-      const pubKey = ab2str(
+      const pubKey = ArrayBufferToString(
         pubKeyBrut.slice(pubKeyBrut.byteLength - 65),
         "hex"
       );

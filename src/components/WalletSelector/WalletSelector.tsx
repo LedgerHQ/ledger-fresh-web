@@ -1,8 +1,7 @@
-import clsx from "clsx";
 import Image from "next/image";
-import { ComponentProps, forwardRef, ReactNode } from "react";
 import styles from "./WalletSelector.module.css";
 import { useState, useEffect } from "react";
+import { getAccounts } from "@/services/accountStorage/account.storage";
 
 interface Props {}
 
@@ -10,8 +9,8 @@ export function WalletSelector({ ...props }: Props) {
   const [username, setUsername] = useState<string>("");
 
   useEffect(() => {
-    const name = localStorage.getItem("walletName") || "placeholder";
-    setUsername(name);
+    const accounts = getAccounts();
+    accounts.length ? setUsername(accounts[0].name) : setUsername("No_account");
   }, []);
 
   return (

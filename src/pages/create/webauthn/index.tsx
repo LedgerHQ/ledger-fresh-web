@@ -1,3 +1,4 @@
+import { InvokeFunctionResponse } from "starknet";
 import { useState } from "react";
 import styles from "./Webauthn.module.css";
 import { Button } from "@/components/Button";
@@ -6,6 +7,8 @@ import { getKeyCredentialCreationOptions } from "@/utils/webauthn";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { create } from "@github/webauthn-json/browser-ponyfill";
+import ab2str from "arraybuffer-to-string";
 
 export default function Webauthn() {
   const [username, setUsername] = useState<string>("");
@@ -38,24 +41,31 @@ export default function Webauthn() {
       );
 
       // create the credential
-      const credential = await navigator.credentials.create(options);
+      // const credentials = await navigator.credentials.create(options);
+      const credentials = await create(options);
 
-      console.log(options);
-
-      console.log(credential);
       localStorage.setItem("walletName", username);
 
-      if (!credential) throw "";
+      if (!credentials) throw "";
       if (!options.publicKey) throw "";
 
-      const transaction_hash = await fetch("/api/deployer/deploy", {
-        method: "POST",
-        body: JSON.stringify({ pubKey: options.publicKey.user.name }),
-      });
+      // @ts-ignore
+      const pubKeyBrut = credentials.response.getPublicKey();
+      const pubKey = ab2str(
+        pubKeyBrut.slice(pubKeyBrut.byteLength - 65),
+        "hex"
+      );
 
-      console.log(transaction_hash);
+      const res: InvokeFunctionResponse = await fetch("/api/deployer/deploy", {
+        method: "POST",
+        body: pubKey,
+      }).then((response) => response.json());
+
+      console.log(res.transaction_hash);
+      localStorage.setItem("transaction", res.transaction_hash);
 
       router.push("/created");
+
       /**
        * @TODO redirect */
 

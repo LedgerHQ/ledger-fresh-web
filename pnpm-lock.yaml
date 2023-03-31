@@ -1,14 +1,18 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@github/webauthn-json': ^2.1.1
   '@next/font': 13.1.6
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^14.4.3
+  '@types/bn.js': ^5.1.1
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   '@types/testing-library__jest-dom': ^5.14.5
+  arraybuffer-to-string: ^1.0.2
+  bn.js: ^5.2.1
   clsx: ^1.2.1
   eslint: 8.34.0
   eslint-config-next: 13.1.6
@@ -25,10 +29,13 @@ specifiers:
   typescript: 4.9.5
 
 dependencies:
+  '@github/webauthn-json': 2.1.1
   '@next/font': 13.1.6
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
+  arraybuffer-to-string: 1.0.2
+  bn.js: 5.2.1
   clsx: 1.2.1
   eslint: 8.34.0
   eslint-config-next: 13.1.6_7kw3g6rralp5ps6mg3uyzz6azm
@@ -43,6 +50,7 @@ devDependencies:
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 14.4.3
+  '@types/bn.js': 5.1.1
   '@types/testing-library__jest-dom': 5.14.5
   eslint-config-prettier: 8.6.0_eslint@8.34.0
   jest: 29.4.2_@types+node@18.13.0
@@ -426,6 +434,11 @@ packages:
 
   /@ethersproject/logger/5.7.0:
     resolution: {integrity: sha512-0odtFdXu/XHtjQXJYA3u9G0G8btm0ND5Cu8M7i5vhEcE8/HmF4Lbdqanwyv4uQTr2tx6b7fQRmgLrsnpQlmnig==}
+    dev: false
+
+  /@github/webauthn-json/2.1.1:
+    resolution: {integrity: sha512-XrftRn4z75SnaJOmZQbt7Mk+IIjqVHw+glDGOxuHwXkZBZh/MBoRS7MHjSZMDaLhT4RjN2VqiEU7EOYleuJWSQ==}
+    hasBin: true
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -1014,6 +1027,12 @@ packages:
       '@babel/types': 7.20.7
     dev: true
 
+  /@types/bn.js/5.1.1:
+    resolution: {integrity: sha512-qNrYbZqMx0uJAfKnKclPh+dTwK33KfLHYqtyODwd5HnXOjnkhc4qgn3BrK6RWyGZm5+sIFE7Q7Vz6QQtJB7w7g==}
+    dependencies:
+      '@types/node': 18.13.0
+    dev: true
+
   /@types/graceful-fs/4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
     dependencies:
@@ -1306,6 +1325,10 @@ packages:
       es-abstract: 1.21.1
       es-shim-unscopables: 1.0.0
       get-intrinsic: 1.2.0
+    dev: false
+
+  /arraybuffer-to-string/1.0.2:
+    resolution: {integrity: sha512-WbIYlLVmvIAyUBdQRRuyGOJRriOQy9OAsWcyURmsRQp9+g647hdMSS2VFKXbJLVw0daUu06hqwLXm9etVrXI9A==}
     dev: false
 
   /ast-types-flow/0.0.7:

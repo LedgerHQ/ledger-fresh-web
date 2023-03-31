@@ -1,4 +1,3 @@
-import { InvokeFunctionResponse } from "starknet";
 import { useState } from "react";
 import styles from "./Webauthn.module.css";
 import { Button } from "@/components/Button";
@@ -9,6 +8,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { create } from "@github/webauthn-json/browser-ponyfill";
 import ab2str from "arraybuffer-to-string";
+import { addAccount } from "@/services/accountStorage/account.storage";
+
+const network: any = process.env.NEXT_PUBLIC_NETWORK || "goerli-alpha";
 
 export default function Webauthn() {
   const [username, setUsername] = useState<string>("");
@@ -41,10 +43,7 @@ export default function Webauthn() {
       );
 
       // create the credential
-      // const credentials = await navigator.credentials.create(options);
       const credentials = await create(options);
-
-      localStorage.setItem("walletName", username);
 
       if (!credentials) throw "";
       if (!options.publicKey) throw "";
@@ -56,13 +55,17 @@ export default function Webauthn() {
         "hex"
       );
 
-      const res: InvokeFunctionResponse = await fetch("/api/deployer/deploy", {
-        method: "POST",
-        body: pubKey,
-      }).then((response) => response.json());
+      const res: { accountAddress: string; transaction_hash: string } =
+        await fetch("/api/deployer/deploy", {
+          method: "POST",
+          body: pubKey,
+        }).then((response) => response.json());
 
-      console.log(res.transaction_hash);
-      localStorage.setItem("transaction", res.transaction_hash);
+      addAccount({
+        networkId: network,
+        name: username,
+        address: res.accountAddress,
+      });
 
       router.push("/created");
 

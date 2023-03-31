@@ -29,7 +29,6 @@ describe("crypto", () => {
   describe("createUserId", () => {
     it("returned user id is valid hex string", () => {
       const userId = crypto.createUserId("qdqd", Date.now());
-      console.log(userId);
 
       // regex to validate a string is encoded in base64
       const hexRegex = /^[0-9a-fA-F]+$/;

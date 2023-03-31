@@ -1,6 +1,7 @@
 export interface WalletAccount {
   address: string;
   networkId: string;
+  name: string;
 }
 
 export function getAccounts(): WalletAccount[] {

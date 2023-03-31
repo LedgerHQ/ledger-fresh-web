@@ -8,16 +8,17 @@ import {
   number,
 } from "starknet";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { split } from "./utils";
+import { split, parsePubKey, getAccountAddress } from "./utils";
 
 // This file deploy a new account contract using the deployer already deployed on-chain
 // The script will fail if you deploy two different contracts using the same pubKey (as it is used as a salt)
 
+const NODE_ENV = process.env.NODE_ENV || "";
 const CONTRACT_ACCOUNT_CLS_HASH = process.env.CONTRACT_ACCOUNT_CLS_HASH || "";
 const PROXY_CLS_HASH = process.env.PROXY_CLS_HASH || "";
 const WEBAUTHN_CLS_HASH = process.env.WEBAUTHN_CLS_HASH || "";
 const network: any = process.env.NETWORK || "goerli-alpha";
-const deployerAddress =
+const DEPLOYER_ADDR =
   process.env.DEPLOYER_ADDR ||
   "0x021279121162867143b675bbce20b4010099842d31138eeaafcfcfea4afb596d";
 
@@ -32,30 +33,22 @@ const provider = new SequencerProvider({
 
 const toCairoBool = (value: boolean): string => (+value).toString();
 
-/**
- *  splitting a pubkey into an ECpoint.
- * @param pubkey prefixed PKCS11 key.
- * @returns ECpoint (x,y)
- */
-const parsePubKey = (pubkey: string): { x: string; y: string } => {
-  return {
-    x: pubkey.slice(2, 66),
-    y: pubkey.slice(66),
-  };
-};
-
 export default async function deployAccount(
   req: NextApiRequest,
-  res: NextApiResponse<InvokeFunctionResponse>
+  res: NextApiResponse<{ accountAddress: string; transaction_hash: string }>
 ) {
   const deployerPK = "0";
   const devnetKeyPair = ec.getKeyPair(deployerPK);
-  const deployerAccount = new Account(provider, deployerAddress, devnetKeyPair);
+  const deployerAccount = new Account(provider, DEPLOYER_ADDR, devnetKeyPair);
 
   const pubKey = req.body;
 
-  const keypair = ec.genKeyPair();
-  const deviceKey = ec.getStarkKey(keypair);
+  // const keypair = ec.genKeyPair();
+  // const deviceKey = ec.getStarkKey(keypair);
+
+  // note: Hard set, not used in fresh.
+  const deviceKey =
+    "0x3a85192c373a2a026412b7412a3b45915a529b6d8bc5dfe5a30b7d1f2504917";
 
   const { x, y } = parsePubKey(pubKey);
 
@@ -73,17 +66,32 @@ export default async function deployAccount(
     }),
   });
 
-  const transaction_hash = await deployerAccount.execute({
-    contractAddress: UDC.ADDRESS,
-    entrypoint: UDC.ENTRYPOINT,
-    calldata: [
-      PROXY_CLS_HASH,
-      deviceKey,
-      toCairoBool(true),
-      calldata.length,
-      ...calldata,
-    ],
-  });
-
-  return res.status(200).json(transaction_hash);
+  if (NODE_ENV == "development") {
+    const response = {
+      transaction_hash:
+        "0x0322dfe01abf27e2cef2d034873975daf5f0e83660aabacdbb98c52fe0588124",
+    };
+    return res.status(200).json({
+      transaction_hash: response.transaction_hash,
+      accountAddress:
+        "0x04fe82a3e91503976018339cbdf42737f367a1a531dead38072c8e0b44e1db17",
+    });
+  } else {
+    const response = await deployerAccount.execute({
+      contractAddress: UDC.ADDRESS,
+      entrypoint: UDC.ENTRYPOINT,
+      calldata: [
+        PROXY_CLS_HASH,
+        deviceKey,
+        toCairoBool(true),
+        calldata.length,
+        ...calldata,
+      ],
+    });
+    const accountAddress = getAccountAddress(pubKey, deviceKey);
+    return res.status(200).json({
+      transaction_hash: response.transaction_hash,
+      accountAddress,
+    });
+  }
 }

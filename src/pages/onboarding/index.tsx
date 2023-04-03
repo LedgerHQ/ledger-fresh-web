@@ -27,7 +27,7 @@ export default function Onboarding() {
           >
             Create a new wallet
           </LinkButton>
-          <LinkButton href="/import" variant="subtle">
+          <LinkButton href="/" variant="subtle">
             I already have a wallet
           </LinkButton>
         </div>

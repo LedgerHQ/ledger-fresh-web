@@ -1,10 +1,27 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
+
 import styles from "@/styles/Home.module.css";
 import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
 import { LinkButton } from "@/components/Button";
+import {
+  getAccounts,
+  WalletAccount,
+} from "@/services/accountStorage/account.storage";
+import { TokenList } from "@/components/TokenList";
 
 export default function Home() {
+  const [account, setAccount] = useState<WalletAccount>();
+
+  useEffect(() => {
+    const accounts = getAccounts();
+    if (accounts.length) {
+      console.log(accounts);
+      setAccount(accounts[0]);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -16,12 +33,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Main variant="centered">
-        <div className={styles.description}>
-          <h1>Ledger Fresh</h1>
-        </div>
-        <LinkButton href={"/onboarding"}>Onboarding</LinkButton>
-      </Main>
+      <div className="page">
+        <Main variant="left">
+          {account ? <TokenList account={account} /> : <p></p>}
+        </Main>
+        <LinkButton className={styles.footer} href={"/onboarding"}>
+          Onboarding
+        </LinkButton>
+      </div>
     </>
   );
 }

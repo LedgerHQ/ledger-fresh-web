@@ -1,10 +1,9 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
-
 import styles from "@/styles/Home.module.css";
 import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
-import { LinkButton } from "@/components/Button";
+import { LinkButton, Button } from "@/components/Button";
 import {
   getAccounts,
   WalletAccount,
@@ -34,12 +33,19 @@ export default function Home() {
       </Head>
       <Header />
       <div className="page">
-        <Main variant="left">
-          {account ? <TokenList account={account} /> : <p></p>}
-        </Main>
-        <LinkButton className={styles.footer} href={"/onboarding"}>
-          Onboarding
-        </LinkButton>
+        {account ? (
+          <Main variant="left">
+            <LinkButton href={"/send"} variant="secondary">
+              Send
+            </LinkButton>
+            <br />
+            <TokenList account={account} />
+          </Main>
+        ) : (
+          <footer className={styles.footer}>
+            <LinkButton href={"/onboarding"}>Onboarding</LinkButton>
+          </footer>
+        )}
       </div>
     </>
   );

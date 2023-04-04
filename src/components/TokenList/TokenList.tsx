@@ -22,8 +22,18 @@ export function TokenList({ account, ...props }: Props) {
 
   return (
     <div className={styles.list}>
-      <TokenRow balance={balance} />
-      <TokenRow balance={balance} />
+      <TokenRow
+        balance={balance}
+        label="Ethereum"
+        src="/Icons/ETH.svg"
+        size={20}
+      />
+      <TokenRow
+        balance={balance}
+        label="Ethereum"
+        src="/Icons/ETH.svg"
+        size={20}
+      />
     </div>
   );
 }

@@ -2,26 +2,19 @@ import Image from "next/image";
 import styles from "./TokenList.module.css";
 import { formatUnits } from "@/services/token/erc20";
 import { BigNumberish } from "ethers";
+import { TokenBagde } from "./TokenBadge";
 
 interface Props {
   balance: BigNumberish;
+  src: string;
+  size: number;
+  label: string;
 }
 
-export function TokenRow({ balance, ...props }: Props) {
+export function TokenRow({ balance, src, size, label, ...props }: Props) {
   return (
     <div className={styles.row}>
-      <div className={styles.left}>
-        <div className={styles.icon}>
-          <Image
-            src="/Icons/ETH.svg"
-            alt="back"
-            width={20}
-            height={20}
-            priority
-          />
-        </div>
-        <p>Ethereum: </p>
-      </div>
+      <TokenBagde label={label} src={src} size={size} />
       <p>{formatUnits(balance)}</p>
     </div>
   );

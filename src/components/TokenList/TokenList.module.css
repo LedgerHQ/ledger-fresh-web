@@ -16,9 +16,7 @@
   align-items: center;
 }
 
-.left {
-  display: flex;
-  align-items: center;
+.label {
   font-weight: 500;
 }
 
@@ -26,8 +24,6 @@
   display: flex;
   justify-content: center;
   background: linear-gradient(180deg, #0fbdcd 0%, #b6ebf0 100%);
-  border-radius: 24px;
+  border-radius: 14px;
   margin-right: 0.2rem;
-  width: 2.5em;
-  height: 2.5em;
 }

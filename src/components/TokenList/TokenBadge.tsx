@@ -7,13 +7,20 @@ interface Props {
   label: string;
 }
 
-export function TokenBagde({ src, size, label, ...props }: Props) {
+export function TokenBadge({ src, size, label, ...props }: Props) {
   return (
     <div className={styles.badge}>
-      <div className={styles.icon}>
+      <div
+        className={styles.icon}
+        style={{
+          width: `${size * 2}px`,
+          height: `${size * 2}px`,
+          borderRadius: `${size - 3}px`,
+        }}
+      >
         <Image src={src} alt="back" width={size} height={size} priority />
       </div>
-      <p> {label} </p>
+      <label className={styles.label}> {label} </label>
     </div>
   );
 }

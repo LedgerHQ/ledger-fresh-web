@@ -18,6 +18,7 @@ import {
   uint256,
   Provider,
 } from "starknet";
+import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
@@ -67,6 +68,13 @@ export default function Send() {
         invoDetails,
         account.authenticatorId
       );
+
+      addTransaction({
+        networkId: account.networkId,
+        hash: transaction_hash,
+        type: 20,
+        data: ["ETH", amount],
+      });
     } catch (e) {
       console.error(e);
       throw e;

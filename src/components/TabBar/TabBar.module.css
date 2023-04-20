@@ -3,7 +3,7 @@
   width: 100%;
   justify-content: space-between;
   border: 1px solid rgba(16, 17, 21, 0.1);
-  border-radius: 24px;
+  border-radius: 0px 0px 24px 24px;
   padding: 16px 32px;
 
   margin-bottom: 2em;
@@ -25,5 +25,25 @@
   border-left-width: 1px;
 }
 
-.item > img {
+.notification {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 0;
+  border-radius: 24px 24px 0px 0px;
+  padding: 1em;
+  display: flex;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  align-items: center;
+}
+
+.notification > p {
+  margin-left: 0.8em;
+}
+
+.address {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 20%;
+  margin-left: 3px !important;
 }

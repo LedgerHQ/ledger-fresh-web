@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Image from "next/image";
+
 import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 import Main from "@/components/MainContainer";
@@ -9,6 +11,7 @@ import {
   WalletAccount,
 } from "@/services/accountStorage/account.storage";
 import { TokenList } from "@/components/TokenList";
+import TabBar from "@/components/TabBar/TabBar";
 
 export default function Home() {
   const [account, setAccount] = useState<WalletAccount>();
@@ -46,6 +49,36 @@ export default function Home() {
             <LinkButton href={"/onboarding"}>Onboarding</LinkButton>
           </footer>
         )}
+        <TabBar initialActiveIndex={0}>
+          <Image
+            src="/Icons/wallet.svg"
+            alt="back"
+            width={20}
+            height={20}
+            priority
+          />
+          <Image
+            src="/Icons/clock.svg"
+            alt="back"
+            width={20}
+            height={20}
+            priority
+          />
+          <Image
+            src="/Icons/planet.svg"
+            alt="back"
+            width={20}
+            height={20}
+            priority
+          />
+          <Image
+            src="/Icons/power.svg"
+            alt="back"
+            width={20}
+            height={20}
+            priority
+          />
+        </TabBar>
       </div>
     </>
   );

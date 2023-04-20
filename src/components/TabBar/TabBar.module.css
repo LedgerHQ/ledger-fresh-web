@@ -1,0 +1,29 @@
+.tabbar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid rgba(16, 17, 21, 0.1);
+  border-radius: 24px;
+  padding: 16px 32px;
+
+  margin-bottom: 2em;
+}
+
+.item {
+  display: flex;
+}
+
+.item[data-active="false"] {
+  padding: 8px;
+}
+.item[data-active="true"] {
+  background: rgba(16, 17, 21, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+}
+.item[data-active="true"] + div {
+  border-left-width: 1px;
+}
+
+.item > img {
+}

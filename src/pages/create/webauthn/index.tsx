@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { create } from "@github/webauthn-json/browser-ponyfill";
 import { addAccount } from "@/services/accountStorage/account.storage";
+import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 
 function ArrayBufferToString(
   buffer: Buffer,
@@ -74,6 +75,13 @@ export default function Webauthn() {
         name: username,
         address: res.accountAddress,
         authenticatorId: credentials.id,
+      });
+
+      addTransaction({
+        networkId: network,
+        hash: res.transaction_hash,
+        type: 1,
+        data: [res.accountAddress],
       });
 
       router.push("/created");

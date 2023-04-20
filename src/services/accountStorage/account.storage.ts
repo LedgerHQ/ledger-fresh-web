@@ -2,6 +2,7 @@ export interface WalletAccount {
   address: string;
   networkId: string;
   name: string;
+  authenticatorId: string;
 }
 
 export function getAccounts(): WalletAccount[] {

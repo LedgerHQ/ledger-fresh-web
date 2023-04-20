@@ -1,7 +1,7 @@
 import { number, hash, stark } from "starknet";
+import { bnToCairoBN, parsePubKey } from "@/utils/webauthn";
 import * as BN from "bn.js";
 
-const BASE = number.toBN(2).pow(number.toBN(86));
 const CONTRACT_ACCOUNT_CLS_HASH = process.env.CONTRACT_ACCOUNT_CLS_HASH || "";
 const PROXY_CLS_HASH = process.env.PROXY_CLS_HASH || "";
 const WEBAUTHN_CLS_HASH = process.env.WEBAUTHN_CLS_HASH || "";
@@ -14,34 +14,11 @@ export const UDC = {
   ENTRYPOINT: "deployContract",
 };
 
-export function split(n: BN): {
-  x: BN;
-  y: BN;
-  z: BN;
-} {
-  const x = n.mod(BASE);
-  const y = n.div(BASE).mod(BASE);
-  const z = n.div(BASE).div(BASE);
-  return { x, y, z };
-}
-
-/**
- *  splitting a pubkey into an ECpoint.
- * @param pubkey prefixed PKCS11 key.
- * @returns ECpoint (x,y)
- */
-export const parsePubKey = (pubkey: string): { x: string; y: string } => {
-  return {
-    x: pubkey.slice(2, 66),
-    y: pubkey.slice(66),
-  };
-};
-
 export function getAccountAddress(pubKey: string, deviceKey: string) {
   const { x, y } = parsePubKey(pubKey);
 
-  const { x: x0, y: x1, z: x2 } = split(number.toBN(x, 16));
-  const { x: y0, y: y1, z: y2 } = split(number.toBN(y, 16));
+  const { x: x0, y: x1, z: x2 } = bnToCairoBN(number.toBN(x, 16));
+  const { x: y0, y: y1, z: y2 } = bnToCairoBN(number.toBN(y, 16));
   const address = hash.calculateContractAddressFromHash(
     hash.pedersen([DEPLOYER_ADDR, deviceKey]),
     PROXY_CLS_HASH,

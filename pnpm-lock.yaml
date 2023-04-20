@@ -11,6 +11,7 @@ specifiers:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   '@types/testing-library__jest-dom': ^5.14.5
+  base64url: ^3.0.1
   bn.js: ^5.2.1
   clsx: ^1.2.1
   eslint: 8.34.0
@@ -34,6 +35,7 @@ dependencies:
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
+  base64url: 3.0.1
   bn.js: 5.2.1
   clsx: 1.2.1
   eslint: 8.34.0
@@ -1436,6 +1438,11 @@ packages:
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  /base64url/3.0.1:
+    resolution: {integrity: sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /bignumber.js/9.1.1:
     resolution: {integrity: sha512-pHm4LsMJ6lzgNGVfZHjMoO8sdoRhOzOH4MLmY65Jg70bpxCKu5iOHNJyfF6OyvYw7t8Fpf35RuzUyqnQsj8Vig==}

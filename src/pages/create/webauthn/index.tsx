@@ -73,6 +73,7 @@ export default function Webauthn() {
         networkId: network,
         name: username,
         address: res.accountAddress,
+        authenticatorId: credentials.id,
       });
 
       router.push("/created");

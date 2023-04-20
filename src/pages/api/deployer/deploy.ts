@@ -8,7 +8,8 @@ import {
   number,
 } from "starknet";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { split, parsePubKey, getAccountAddress } from "./utils";
+import { getAccountAddress } from "./utils";
+import { bnToCairoBN, parsePubKey } from "@/utils/webauthn";
 
 // This file deploy a new account contract using the deployer already deployed on-chain
 // The script will fail if you deploy two different contracts using the same pubKey (as it is used as a salt)
@@ -52,8 +53,8 @@ export default async function deployAccount(
 
   const { x, y } = parsePubKey(pubKey);
 
-  const { x: x0, y: x1, z: x2 } = split(number.toBN(x, 16));
-  const { x: y0, y: y1, z: y2 } = split(number.toBN(y, 16));
+  const { x: x0, y: x1, z: x2 } = bnToCairoBN(number.toBN(x, 16));
+  const { x: y0, y: y1, z: y2 } = bnToCairoBN(number.toBN(y, 16));
 
   const calldata = stark.compileCalldata({
     implementation: CONTRACT_ACCOUNT_CLS_HASH,
@@ -69,12 +70,12 @@ export default async function deployAccount(
   if (NODE_ENV == "development") {
     const response = {
       transaction_hash:
-        "0x0322dfe01abf27e2cef2d034873975daf5f0e83660aabacdbb98c52fe0588124",
+        "0x05c06f917736a0fbbf2615f0c30a50fa22c3cc42694eb47836f7bc9f541d8baa",
     };
     return res.status(200).json({
       transaction_hash: response.transaction_hash,
       accountAddress:
-        "0x04fe82a3e91503976018339cbdf42737f367a1a531dead38072c8e0b44e1db17",
+        "0x05bb8286aac5616e8d56edb0448649b73c1809e0d299cef941f87d748411b1fc",
     });
   } else {
     const response = await deployerAccount.execute({

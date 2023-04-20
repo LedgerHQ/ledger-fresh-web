@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { ComponentProps, forwardRef, ReactNode } from "react";
 import styles from "./Header.module.css";
 import { WalletSelector } from "@/components/WalletSelector";
 

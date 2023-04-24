@@ -17,6 +17,12 @@
   border: transparent;
 }
 
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  max-width: 23ch;
+}
+
 .subtitle {
   margin: 0;
   color: rgb(var(--color-gray-500));

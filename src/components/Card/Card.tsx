@@ -75,7 +75,7 @@ export function InfoCard({
       <div className={styles.main}>
         <div>
           <h3> {title} </h3>
-          <p className={styles.description}> {description}</p>
+          <div className={styles.description}> {description}</div>
         </div>
       </div>
       {children && <span className={styles.label}>{children}</span>}
@@ -98,11 +98,11 @@ export function AddLedgerCard() {
       description={
         <div>
           <div>Sign transactions using a Ledger. </div>
-          <div>
+          <p>
             {/* eslint-disable-next-line */}
             You'll be able to use your wallet from any mobile or desktop with
             your Ledger.
-          </div>
+          </p>
         </div>
       }
     ></InfoCard>

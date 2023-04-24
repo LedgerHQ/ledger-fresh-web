@@ -115,7 +115,7 @@ export default function Webauthn() {
           />
         </Link>
         <label htmlFor="username">
-          <h2>Give a name to your wallet</h2>
+          <h2 className={styles.title}>Give a name to your wallet</h2>
           <p className={styles.subtitle}>
             This name will be only displayed to you and stored locally.
           </p>

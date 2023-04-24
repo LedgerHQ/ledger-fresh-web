@@ -12,6 +12,7 @@ import {
 } from "@/services/accountStorage/account.storage";
 import { TokenList } from "@/components/TokenList";
 import TabBar from "@/components/TabBar/TabBar";
+import { AddLedgerCard } from "@/components/Card";
 
 export default function Home() {
   const [account, setAccount] = useState<WalletAccount>();
@@ -49,36 +50,39 @@ export default function Home() {
             <LinkButton href={"/onboarding"}>Onboarding</LinkButton>
           </footer>
         )}
-        <TabBar initialActiveIndex={0}>
-          <Image
-            src="/Icons/wallet.svg"
-            alt="back"
-            width={20}
-            height={20}
-            priority
-          />
-          <Image
-            src="/Icons/clock.svg"
-            alt="back"
-            width={20}
-            height={20}
-            priority
-          />
-          <Image
-            src="/Icons/planet.svg"
-            alt="back"
-            width={20}
-            height={20}
-            priority
-          />
-          <Image
-            src="/Icons/power.svg"
-            alt="back"
-            width={20}
-            height={20}
-            priority
-          />
-        </TabBar>
+        <section>
+          <AddLedgerCard />
+          <TabBar initialActiveIndex={0}>
+            <Image
+              src="/Icons/wallet.svg"
+              alt="back"
+              width={20}
+              height={20}
+              priority
+            />
+            <Image
+              src="/Icons/clock.svg"
+              alt="back"
+              width={20}
+              height={20}
+              priority
+            />
+            <Image
+              src="/Icons/planet.svg"
+              alt="back"
+              width={20}
+              height={20}
+              priority
+            />
+            <Image
+              src="/Icons/power.svg"
+              alt="back"
+              width={20}
+              height={20}
+              priority
+            />
+          </TabBar>
+        </section>
       </div>
     </>
   );

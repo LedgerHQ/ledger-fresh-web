@@ -3,6 +3,7 @@ export interface Transaction {
   networkId: string;
   type: number;
   data: string[];
+  hidden: boolean;
 }
 
 export function getTransactions(): Transaction[] {

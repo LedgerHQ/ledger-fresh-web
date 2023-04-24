@@ -82,6 +82,7 @@ export default function Webauthn() {
         hash: res.transaction_hash,
         type: 1,
         data: [res.accountAddress],
+        hidden: true,
       });
 
       router.push("/created");

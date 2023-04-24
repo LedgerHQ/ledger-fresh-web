@@ -41,3 +41,36 @@
   line-height: 1.5;
   max-width: 30ch;
 }
+
+.infoCard {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid rgba(16, 17, 21, 0.1);
+  border-radius: 24px;
+  padding: 16px 32px;
+
+  margin-bottom: 2em;
+}
+
+.infoCard .description {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 135%;
+
+  letter-spacing: -0.025em;
+
+  color: rgba(16, 17, 21, 0.4);
+}
+
+.infoCard h3 {
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.infoTitle {
+  display: flex;
+  justify-content: space-between;
+}

@@ -27,18 +27,6 @@ export default function Send() {
     "0x06f19B187AABB71473c27e01719fc33d53377703E7063c3151cd2481bEE1C94C"
   );
 
-  /**
-   * sendTransaction({
-      to: address,
-      method: "transfer",
-      calldata: {
-        recipient,
-        amount: getUint256CalldataFromBN(
-          parseAmount(amount, decimals),
-        ),
-      },
-    })
-   */
   const sendToken = async () => {
     if (!account) return;
     try {
@@ -74,6 +62,7 @@ export default function Send() {
         hash: transaction_hash,
         type: 20,
         data: ["ETH", amount],
+        hidden: false,
       });
     } catch (e) {
       console.error(e);

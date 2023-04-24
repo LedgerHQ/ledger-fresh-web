@@ -5,6 +5,7 @@ import {
 import React, { useState, useEffect } from "react";
 import styles from "./TabBar.module.css";
 import Image from "next/image";
+import clsx from "clsx";
 
 export type Props = React.PropsWithChildren<{
   /**
@@ -32,15 +33,15 @@ export default function TabBar({
   initialActiveIndex,
 }: Props): JSX.Element {
   useEffect(() => {
-    const transaction = getTransactions();
-    setNotification(transaction[0]);
+    const transactions = getTransactions();
+    setNotification(transactions[transactions.length - 1]);
   }, []);
 
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
   const [notification, setNotification] = useState<Transaction>();
   return (
     <div>
-      {notification ? (
+      {notification && !notification.hidden ? (
         <div
           className={styles.notification}
           onClick={() => openStarkScan(notification.hash)}
@@ -56,7 +57,12 @@ export default function TabBar({
           <p className={styles.address}>{`${notification.hash}`}</p>
         </div>
       ) : null}
-      <div className={styles.tabbar}>
+      <div
+        className={clsx(
+          styles.tabbar,
+          notification && !notification.hidden && styles.notificationBorder
+        )}
+      >
         {React.Children.toArray(children).map((child, index) => (
           <div
             className={styles.item}

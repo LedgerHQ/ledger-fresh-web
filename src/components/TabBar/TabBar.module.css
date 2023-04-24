@@ -3,10 +3,14 @@
   width: 100%;
   justify-content: space-between;
   border: 1px solid rgba(16, 17, 21, 0.1);
-  border-radius: 0px 0px 24px 24px;
+  border-radius: 24px;
   padding: 16px 32px;
 
   margin-bottom: 2em;
+}
+
+.notificationBorder {
+  border-radius: 0px 0px 24px 24px;
 }
 
 .item {

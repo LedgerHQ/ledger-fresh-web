@@ -28,12 +28,6 @@ export function TokenList({ account, ...props }: Props) {
         src="/Icons/ETH.svg"
         size={20}
       />
-      <TokenRow
-        balance={balance}
-        label="Ethereum"
-        src="/Icons/ETH.svg"
-        size={20}
-      />
     </div>
   );
 }

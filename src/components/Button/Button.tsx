@@ -6,6 +6,7 @@ import styles from "./Button.module.css";
 interface Props {
   variant?: "primary" | "secondary" | "subtle" | "destructive";
   icon?: ReactNode;
+  disabled?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ComponentProps<"button"> & Props>(

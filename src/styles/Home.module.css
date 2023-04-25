@@ -8,6 +8,6 @@
   display: flex;
 }
 
-.buttonRow a:first-of-type {
+.buttonRow button {
   margin-right: 1em;
 }

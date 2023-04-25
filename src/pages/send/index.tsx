@@ -23,9 +23,7 @@ import { addTransaction } from "@/services/transactionStorage/transaction.storag
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
   const [amount, setAmount] = useState<string>("1");
-  const [address, setAddress] = useState<string>(
-    "0x06f19B187AABB71473c27e01719fc33d53377703E7063c3151cd2481bEE1C94C"
-  );
+  const [address, setAddress] = useState<string>("");
 
   const sendToken = async () => {
     if (!account) return;
@@ -108,10 +106,14 @@ export default function Send() {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Address"
+            placeholder="0xdeadbabe..."
           />
-          <Button onClick={sendToken}> Send </Button>
         </Main>
+        <section className={styles.footer}>
+          <Button className={styles.sendButton} onClick={sendToken}>
+            Send
+          </Button>
+        </section>
       </div>
     </>
   );

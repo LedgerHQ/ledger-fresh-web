@@ -22,6 +22,7 @@ export function TokenList({ account, ...props }: Props) {
 
   return (
     <div className={styles.list}>
+      <h2 className={styles.title}> Your funds </h2>
       <TokenRow
         balance={balance}
         label="Ethereum"

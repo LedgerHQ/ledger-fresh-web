@@ -15,7 +15,12 @@ export function TokenRow({ balance, src, size, label, ...props }: Props) {
   return (
     <div className={styles.row}>
       <TokenBadge label={label} src={src} size={size} />
-      <p>{formatUnits(balance)}</p>
+      <p className={styles.value}>
+        {formatUnits(balance).substring(
+          0,
+          formatUnits(balance).indexOf(".") + 6
+        )}
+      </p>
     </div>
   );
 }

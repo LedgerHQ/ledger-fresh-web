@@ -22,3 +22,12 @@
 
   background-color: transparent;
 }
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+.footer .sendButton {
+  width: 33%;
+}

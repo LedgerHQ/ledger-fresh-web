@@ -27,3 +27,13 @@
   border-radius: 14px;
   margin-right: 0.2rem;
 }
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height */
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  color: rgba(16, 17, 21, 0.5);
+}

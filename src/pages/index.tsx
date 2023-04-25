@@ -39,9 +39,14 @@ export default function Home() {
       <div className="page">
         {account ? (
           <Main variant="left">
-            <LinkButton href={"/send"} variant="secondary">
-              Send
-            </LinkButton>
+            <div className={styles.buttonRow}>
+              <Button variant="secondary" disabled>
+                Fund
+              </Button>
+              <LinkButton href={"/send"} variant="secondary">
+                Send
+              </LinkButton>
+            </div>
             <br />
             <TokenList account={account} />
           </Main>

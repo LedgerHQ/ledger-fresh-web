@@ -91,7 +91,14 @@ export const getRequestOptions = (
   },
 });
 
-export const signTransaction = async (
+/**
+ * Sign and send transaction
+ * @param calls
+ * @param transactionsDetail
+ * @param credentialId
+ * @returns
+ */
+export const signAndSendTransaction = async (
   calls: Call[],
   transactionsDetail: InvocationsSignerDetails,
   credentialId: string
@@ -176,10 +183,11 @@ function convertUint8ArrayToWordArray(u8Array: Uint8Array): number[] {
 
   while (i < len) {
     words.push(
-      (u8Array[i++] << 24) |
+      ((u8Array[i++] << 24) |
         (u8Array[i++] << 16) |
         (u8Array[i++] << 8) |
-        u8Array[i++]
+        u8Array[i++]) >>>
+        0
     );
   }
 

@@ -9,8 +9,10 @@ import {
   WalletAccount,
 } from "@/services/accountStorage/account.storage";
 import { TokenBadge } from "@/components/TokenList";
-import { signTransaction } from "@/utils/webauthn";
+import { signAndSendTransaction } from "@/utils/webauthn";
 import { constants } from "@/utils/constant";
+import { useRouter } from "next/router";
+
 import {
   constants as starknetConstant,
   stark,
@@ -24,6 +26,7 @@ export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
   const [amount, setAmount] = useState<string>("1");
   const [address, setAddress] = useState<string>("");
+  const router = useRouter();
 
   const sendToken = async () => {
     if (!account) return;
@@ -41,15 +44,22 @@ export default function Send() {
           calldata,
         },
       ];
+
+      const res: { nonce: string } = await fetch("/api/account/getNonce", {
+        method: "POST",
+        body: JSON.stringify({
+          address: account.address,
+        }),
+      }).then((response) => response.json());
       // TODO getNonce
       const invoDetails = {
         walletAddress: account.address,
         version: "0x1",
         maxFee: "20000000000000000",
         chainId: starknetConstant.StarknetChainId.TESTNET,
-        nonce: 0,
+        nonce: res.nonce,
       };
-      const transaction_hash = await signTransaction(
+      const transaction_hash = await signAndSendTransaction(
         call,
         invoDetails,
         account.authenticatorId
@@ -62,6 +72,8 @@ export default function Send() {
         data: ["ETH", amount],
         hidden: false,
       });
+
+      router.push("/");
     } catch (e) {
       console.error(e);
       throw e;

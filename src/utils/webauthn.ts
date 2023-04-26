@@ -9,8 +9,7 @@ import {
 } from "starknet";
 import base64url from "base64url";
 import BN from "bn.js";
-
-const WEBAUTHN_CLS_HASH = process.env.WEBAUTHN_CLS_HASH!;
+import { constants } from "@/utils/constant";
 
 export function bnToCairoBN(n: BN): {
   x: BN;
@@ -217,7 +216,7 @@ export function formatAssertion(assertion: RawAssertion): Signature {
   const { x: s0, y: s1, z: s2 } = bnToCairoBN(number.toBN(s));
 
   return [
-    number.toBN(WEBAUTHN_CLS_HASH).toString(),
+    number.toBN(constants.WEBAUTHN_CLS_HASH).toString(),
     "0",
     r0.toString(),
     r1.toString(),

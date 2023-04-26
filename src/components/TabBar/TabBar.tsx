@@ -1,6 +1,7 @@
 import {
   getTransactions,
   Transaction,
+  hideLastTransaction,
 } from "@/services/transactionStorage/transaction.storage";
 import React, { useState, useEffect } from "react";
 import styles from "./TabBar.module.css";
@@ -32,29 +33,49 @@ export default function TabBar({
   onTabChange,
   initialActiveIndex,
 }: Props): JSX.Element {
+  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  const [notification, setNotification] = useState<Transaction>();
+
+  function hideNotification() {
+    if (!notification) return;
+    setNotification({
+      ...notification,
+      hidden: !notification.hidden,
+    });
+    hideLastTransaction();
+  }
+
   useEffect(() => {
     const transactions = getTransactions();
     setNotification(transactions[transactions.length - 1]);
   }, []);
 
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
-  const [notification, setNotification] = useState<Transaction>();
   return (
     <div>
       {notification && !notification.hidden ? (
-        <div
-          className={styles.notification}
-          onClick={() => openStarkScan(notification.hash)}
-        >
+        <div className={styles.notification}>
+          <div
+            className={styles.notificationLeft}
+            onClick={() => openStarkScan(notification.hash)}
+          >
+            <Image
+              src="/Icons/ellipse11.svg"
+              alt="back"
+              width={20}
+              height={20}
+              priority
+            />
+            <p>{`Sending ${notification.data[1]} ${notification.data[0]} to`}</p>
+            <p className={styles.address}>{`${notification.hash}`}</p>
+          </div>
           <Image
-            src="/Icons/ellipse11.svg"
+            src="/Icons/cross-23.svg"
             alt="back"
             width={20}
             height={20}
+            onClick={() => hideNotification()}
             priority
           />
-          <p>{`Sending ${notification.data[1]} ${notification.data[0]} to`}</p>
-          <p className={styles.address}>{`${notification.hash}`}</p>
         </div>
       ) : null}
       <div

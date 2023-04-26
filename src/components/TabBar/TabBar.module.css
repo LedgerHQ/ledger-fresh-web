@@ -41,8 +41,15 @@
   align-items: center;
 }
 
-.notification > p {
+.notificationLeft > p {
   margin-left: 0.8em;
+}
+
+.notificationLeft {
+  align-items: center;
+  display: flex;
+  width: 95%;
+  cursor: pointer;
 }
 
 .address {

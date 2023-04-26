@@ -6,4 +6,6 @@ export const constants = {
       decimals: 18,
     },
   },
+  WEBAUTHN_CLS_HASH:
+    "0x6bcb2ecc68f478bd0546c451a0820ce19e2d562e3cfcb5906eede15aa81cc42",
 };

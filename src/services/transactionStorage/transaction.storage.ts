@@ -27,3 +27,10 @@ export function removeTransaction(transaction: Transaction) {
   );
   localStorage.setItem("transactions", JSON.stringify(transactions));
 }
+
+export function hideLastTransaction() {
+  const transactions = getTransactions();
+  transactions[transactions.length - 1].hidden =
+    !transactions[transactions.length - 1].hidden;
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+}

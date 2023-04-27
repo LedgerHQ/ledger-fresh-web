@@ -125,6 +125,11 @@
 
     color-scheme: dark;
   }
+
+  img {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(152deg)
+      brightness(103%) contrast(103%);
+  }
 }
 
 html,
@@ -154,6 +159,7 @@ html.grabbing * {
   flex-direction: column;
   justify-content: space-between;
   min-height: 90vh;
+  margin: 0 1em;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

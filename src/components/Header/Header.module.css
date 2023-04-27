@@ -55,3 +55,7 @@
   background-color: #7ba3ef;
   filter: blur(32px);
 }
+
+.copyIcon {
+  cursor: pointer;
+}

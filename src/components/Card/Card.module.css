@@ -46,7 +46,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  border: 1px solid rgba(16, 17, 21, 0.1);
+  border: 1px solid var(--color-border);
   border-radius: 24px;
   padding: 16px 32px;
 
@@ -61,7 +61,7 @@
 
   letter-spacing: -0.025em;
 
-  color: rgba(16, 17, 21, 0.4);
+  color: var(--color-text-lightest);
 }
 
 .infoCard h3 {

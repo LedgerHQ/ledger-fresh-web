@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./Send.module.css";
 import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
-import { LinkButton, Button } from "@/components/Button";
+import { Button } from "@/components/Button";
 import {
   getAccounts,
   WalletAccount,
@@ -13,14 +13,9 @@ import { signAndSendTransaction } from "@/utils/webauthn";
 import { constants } from "@/utils/constant";
 import { useRouter } from "next/router";
 
-import {
-  constants as starknetConstant,
-  stark,
-  number,
-  uint256,
-  Provider,
-} from "starknet";
+import { constants as starknetConstant, stark, uint256 } from "starknet";
 import { addTransaction } from "@/services/transactionStorage/transaction.storage";
+import { parseUnits } from "ethers";
 
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
@@ -31,7 +26,11 @@ export default function Send() {
   const sendToken = async () => {
     if (!account) return;
     try {
-      const { low, high }: any = uint256.bnToUint256(amount);
+      console.log(parseUnits(amount, "ether").toString());
+      console.log(amount);
+      const { low, high }: any = uint256.bnToUint256(
+        parseUnits(amount, "ether").toString()
+      );
       const calldata = stark.compileCalldata({
         dest: address,
         low,
@@ -69,7 +68,7 @@ export default function Send() {
         networkId: account.networkId,
         hash: transaction_hash,
         type: 20,
-        data: ["ETH", amount],
+        data: ["ETH", amount, address],
         hidden: false,
       });
 
@@ -111,6 +110,7 @@ export default function Send() {
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0"
           />
+          <div className={styles.label}> ETH </div>
           <input
             className={styles.address}
             data-1p-ignore

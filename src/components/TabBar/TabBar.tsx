@@ -66,7 +66,7 @@ export default function TabBar({
               priority
             />
             <p>{`Sending ${notification.data[1]} ${notification.data[0]} to`}</p>
-            <p className={styles.address}>{`${notification.hash}`}</p>
+            <p className={styles.address}>{`${notification.data[2]}`}</p>
           </div>
           <Image
             src="/Icons/cross-23.svg"

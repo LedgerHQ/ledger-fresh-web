@@ -1,10 +1,20 @@
 import Image from "next/image";
 import styles from "./Header.module.css";
 import { WalletSelector } from "@/components/WalletSelector";
+import { useState, useEffect } from "react";
+import { getAccounts } from "@/services/accountStorage/account.storage";
 
 interface Props {}
 
 export function Header({}: Props) {
+  const [address, setAddress] = useState<string>("");
+
+  useEffect(() => {
+    const accounts = getAccounts();
+    accounts.length
+      ? setAddress(accounts[0].address)
+      : setAddress("No_account");
+  }, []);
   return (
     <div className={styles.header}>
       <div className={styles.bg}></div>
@@ -17,22 +27,26 @@ export function Header({}: Props) {
         <Image
           src="/Icons/copy.svg"
           alt="back"
-          width={14}
-          height={14}
+          width={18}
+          height={18}
           priority
+          onClick={() => {
+            navigator.clipboard.writeText(address);
+          }}
+          className={styles.copyIcon}
         />
         <Image
           src="/Icons/qr-code.svg"
           alt="back"
-          width={14}
-          height={14}
+          width={18}
+          height={18}
           priority
         />
         <Image
           src="/Icons/settings.svg"
           alt="back"
-          width={14}
-          height={14}
+          width={18}
+          height={18}
           priority
         />
       </div>

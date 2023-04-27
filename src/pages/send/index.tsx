@@ -26,8 +26,6 @@ export default function Send() {
   const sendToken = async () => {
     if (!account) return;
     try {
-      console.log(parseUnits(amount, "ether").toString());
-      console.log(amount);
       const { low, high }: any = uint256.bnToUint256(
         parseUnits(amount, "ether").toString()
       );
@@ -82,7 +80,6 @@ export default function Send() {
   useEffect(() => {
     const accounts = getAccounts();
     if (accounts.length) {
-      console.log(accounts);
       setAccount(accounts[0]);
     }
   }, []);

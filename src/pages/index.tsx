@@ -22,7 +22,6 @@ export default function Home() {
   useEffect(() => {
     const accounts = getAccounts();
     if (accounts.length) {
-      console.log(accounts);
       setAccount(accounts[0]);
     } else {
       router.push("/onboarding");

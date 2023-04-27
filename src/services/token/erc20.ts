@@ -12,7 +12,6 @@ export async function fetchBalance(address: string): Promise<BigNumberish> {
     provider
   );
   const result = await tokenContract.balanceOf(address);
-  console.log(result);
   return uint256.uint256ToBN(result.balance).toString();
 }
 

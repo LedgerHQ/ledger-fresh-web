@@ -13,15 +13,19 @@ import {
 import { TokenList } from "@/components/TokenList";
 import TabBar from "@/components/TabBar/TabBar";
 import { AddLedgerCard } from "@/components/Card";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [account, setAccount] = useState<WalletAccount>();
+  const router = useRouter();
 
   useEffect(() => {
     const accounts = getAccounts();
     if (accounts.length) {
       console.log(accounts);
       setAccount(accounts[0]);
+    } else {
+      router.push("/onboarding");
     }
   }, []);
 

@@ -5,20 +5,24 @@
 }
 
 .amount {
-  font-size: 42px;
-  margin: 1em 0;
-  width: 33%;
+  font-size: 4rem;
+  margin-top: 1rem;
+  margin-bottom: -0.2em;
   background-color: transparent;
   text-align: center;
 }
 
+.label {
+  color: rgb(var(--color-gray-500));
+}
+
 .address {
   font-size: 12px;
-  margin: 1em 0;
   width: 100%;
   outline: 1px solid rgb(var(--color-gray-200));
   border-radius: 10px;
   padding: 1em;
+  margin-top: 5rem;
 
   background-color: transparent;
 }

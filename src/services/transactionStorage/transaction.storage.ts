@@ -30,7 +30,6 @@ export function removeTransaction(transaction: Transaction) {
 
 export function hideLastTransaction() {
   const transactions = getTransactions();
-  transactions[transactions.length - 1].hidden =
-    !transactions[transactions.length - 1].hidden;
+  transactions[transactions.length - 1].hidden = true;
   localStorage.setItem("transactions", JSON.stringify(transactions));
 }

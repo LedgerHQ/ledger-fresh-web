@@ -5,11 +5,13 @@ import {
   Account,
   Contract,
   uint256,
+  stark,
   number,
 } from "starknet";
 import { constants } from "@/utils/constant";
 import type { NextApiRequest, NextApiResponse } from "next";
 import erc20Abi from "@/abis/ERC20.json";
+import { parseUnits } from "ethers";
 
 const network: any = process.env.NETWORK || "goerli-alpha";
 const DEPLOYER_ADDR =
@@ -32,7 +34,7 @@ export default async function deployAccount(
     constants.ERC20.ETH.address,
     provider
   );
-  tokenContract.connect(deployerAccount);
+  // tokenContract.connect(deployerAccount);
   const { address } = JSON.parse(req.body);
 
   const result = await tokenContract.balanceOf(address);
@@ -43,9 +45,21 @@ export default async function deployAccount(
     });
   }
 
-  const response = await tokenContract.transfer(address, 10000000000000000);
+  const { low, high }: any = uint256.bnToUint256(
+    parseUnits("10000000000000000", "wei").toString()
+  );
+  const transferCallData = stark.compileCalldata({
+    recipient: address,
+    low,
+    high,
+  });
 
+  const { transaction_hash: transaction_hash } = await deployerAccount.execute({
+    contractAddress: constants.ERC20.ETH.address,
+    entrypoint: "transfer",
+    calldata: transferCallData,
+  });
   return res.status(200).json({
-    transaction_hash: response.transaction_hash,
+    transaction_hash,
   });
 }

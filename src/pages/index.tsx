@@ -14,6 +14,7 @@ import { TokenList } from "@/components/TokenList";
 import TabBar from "@/components/TabBar/TabBar";
 import { AddLedgerCard } from "@/components/Card";
 import { useRouter } from "next/router";
+import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 
 export default function Home() {
   const [account, setAccount] = useState<WalletAccount>();
@@ -27,6 +28,34 @@ export default function Home() {
       router.push("/onboarding");
     }
   }, []);
+
+  async function requestFund() {
+    if (!account) return;
+    const res = await fetch("/api/deployer/fund", {
+      method: "POST",
+      body: JSON.stringify({
+        address: account.address,
+      }),
+    }).then((response) => response.json());
+
+    if (res.status != 200) {
+      addTransaction({
+        networkId: account.networkId,
+        hash: res.transaction_hash,
+        type: 99,
+        data: [res.transaction_hash],
+        hidden: false,
+      });
+      return;
+    }
+    addTransaction({
+      networkId: account.networkId,
+      hash: res.transaction_hash,
+      type: 21,
+      data: [],
+      hidden: false,
+    });
+  }
 
   return (
     <>
@@ -43,7 +72,7 @@ export default function Home() {
         {account ? (
           <Main variant="left">
             <div className={styles.buttonRow}>
-              <Button variant="secondary" disabled>
+              <Button variant="secondary" onClick={() => requestFund()}>
                 Fund
               </Button>
               <LinkButton href={"/send"} variant="secondary">

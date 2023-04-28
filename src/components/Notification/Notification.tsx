@@ -6,6 +6,7 @@ import {
 import React, { useState, useEffect } from "react";
 import styles from "./Notification.module.css";
 import Image from "next/image";
+import { useNotificationContext } from "@/services/notificationProvider";
 
 function openStarkScan(hash: string) {
   window.open(
@@ -16,7 +17,7 @@ function openStarkScan(hash: string) {
 }
 
 export function Notification({}): JSX.Element {
-  const [notification, setNotification] = useState<Transaction>();
+  const { notification, setNotification } = useNotificationContext();
 
   function hideNotification() {
     if (!notification) return;

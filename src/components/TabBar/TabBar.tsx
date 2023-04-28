@@ -5,7 +5,7 @@ import {
 } from "@/services/transactionStorage/transaction.storage";
 import React, { useState, useEffect } from "react";
 import styles from "./TabBar.module.css";
-import Image from "next/image";
+import { useNotificationContext } from "@/services/notificationProvider";
 import clsx from "clsx";
 import { Notification } from "@/components/Notification";
 
@@ -21,30 +21,16 @@ export type Props = React.PropsWithChildren<{
   initialActiveIndex?: number;
 }>;
 
-function openStarkScan(hash: string) {
-  window.open(
-    `https://testnet.starkscan.co/tx/${hash}`,
-    "_blank",
-    "noreferrer"
-  );
-}
-
 export default function TabBar({
   children,
   onTabChange,
   initialActiveIndex,
 }: Props): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
-  const [notification, setNotification] = useState<Transaction>();
-
-  useEffect(() => {
-    const transactions = getTransactions();
-    setNotification(transactions[transactions.length - 1]);
-  }, []);
-
+  const { notification } = useNotificationContext();
   return (
     <div>
-      {notification && !notification.hidden ? <Notification /> : null}
+      <Notification />
       <div
         className={clsx(
           styles.tabbar,

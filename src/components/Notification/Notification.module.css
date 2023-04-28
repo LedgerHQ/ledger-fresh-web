@@ -1,0 +1,30 @@
+.notification {
+  border: 1px solid var(--color-border);
+  border-bottom: 0;
+  border-radius: 24px 24px 0px 0px;
+  padding: 1em;
+  display: flex;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  align-items: center;
+}
+
+.notificationLeft {
+  align-items: center;
+  display: flex;
+  width: 95%;
+  cursor: pointer;
+}
+
+.address {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 20%;
+  margin-left: 3px !important;
+}
+
+.type {
+  display: flex;
+  margin-left: 0.8em;
+}

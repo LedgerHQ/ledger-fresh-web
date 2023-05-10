@@ -14,21 +14,21 @@ import erc20Abi from "@/abis/ERC20.json";
 import { parseUnits } from "ethers";
 
 const network: any = process.env.NETWORK || "goerli-alpha";
-const DEPLOYER_ADDR =
-  process.env.DEPLOYER_ADDR ||
+const FUNDER_ADDR =
+  process.env.FUNDER_ADDR ||
   "0x021279121162867143b675bbce20b4010099842d31138eeaafcfcfea4afb596d";
 
 const provider = new SequencerProvider({
   network,
 });
 
-export default async function deployAccount(
+export default async function fundAccount(
   req: NextApiRequest,
   res: NextApiResponse<{ transaction_hash: string }>
 ) {
   const deployerPK = "0";
   const devnetKeyPair = ec.getKeyPair(deployerPK);
-  const deployerAccount = new Account(provider, DEPLOYER_ADDR, devnetKeyPair);
+  const deployerAccount = new Account(provider, FUNDER_ADDR, devnetKeyPair);
   const tokenContract = new Contract(
     erc20Abi as Abi,
     constants.ERC20.ETH.address,

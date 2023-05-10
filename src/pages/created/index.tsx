@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import styles from "./Created.module.css";
 import { LinkButton } from "@/components/Button";
 import Main from "@/components/MainContainer";
-
+import { getAccounts } from "@/services/accountStorage/account.storage";
 export default function Created() {
   const [username, setUsername] = useState<string>("");
 
   useEffect(() => {
-    const name = localStorage.getItem("walletName") || "";
-    setUsername(name);
+    const accounts = getAccounts();
+    setUsername(accounts[0].name);
   }, []);
 
   return (

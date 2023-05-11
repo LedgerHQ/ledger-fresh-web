@@ -23,6 +23,7 @@ const network: any = process.env.NEXT_PUBLIC_NETWORK || "goerli-alpha";
 
 export default function Webauthn() {
   const [username, setUsername] = useState<string>("");
+  const [creating, setCreating] = useState<boolean>(false);
   const router = useRouter();
 
   const register = async () => {
@@ -64,6 +65,8 @@ export default function Webauthn() {
         "hex"
       );
 
+      setCreating(true);
+
       const res: { accountAddress: string; transaction_hash: string } =
         await fetch("/api/deployer/deploy", {
           method: "POST",
@@ -101,7 +104,20 @@ export default function Webauthn() {
       throw e;
     }
   };
-
+  if (creating) {
+    return (
+      <div className={styles.loader}>
+        <Main variant="centered">
+          <div className={styles.container}>
+            <h2> Creating {username} ...</h2>
+            <p className={styles.subtitle}> We are tailoring your wallet. </p>
+          </div>
+          <div className={styles.bg}></div>
+          <div className={styles.bg2}></div>
+        </Main>
+      </div>
+    );
+  }
   return (
     <div className="page">
       <Main>

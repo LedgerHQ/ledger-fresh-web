@@ -35,3 +35,37 @@
 .buttonRow {
   padding: 2rem;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+  margin: 0 1em;
+}
+
+.bg {
+  position: absolute;
+  width: 220px;
+  height: 100px;
+  left: -12%;
+  top: 70%;
+  background-color: #7ba3ef;
+  filter: blur(79px);
+}
+
+.bg2 {
+  position: absolute;
+  width: 120px;
+  height: 100px;
+  right: 0%;
+  top: 80%;
+  background-color: #7ba3ef;
+  filter: blur(79px);
+}

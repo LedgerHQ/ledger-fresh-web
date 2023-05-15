@@ -25,7 +25,7 @@ export function Notification({}): JSX.Element {
       ...notification,
       hidden: !notification.hidden,
     });
-    hideLastTransaction();
+    if (notification.type != 99) hideLastTransaction();
   }
 
   useEffect(() => {

@@ -1,6 +1,7 @@
-import { waitFor, render, screen } from "@testing-library/react";
+import { waitFor, render, screen, act } from "@testing-library/react";
 import * as erc20 from "@/services/token/erc20";
 import { fireEvent } from "@testing-library/react";
+import { NotificationContext } from "@/services/notificationProvider";
 
 import Home from "@/pages/index";
 
@@ -64,6 +65,82 @@ describe("Home", () => {
     const valueElement = await screen.findByText(expectedValue); // Wait for the element with the expected value to appear in the document
 
     expect(valueElement).toBeInTheDocument(); // Check if the element is in the document
+  });
+
+  it("renders Fund and Send buttons when a wallet is present", async () => {
+    setWallet();
+    await waitFor(() => {
+      render(<Home />);
+    });
+    const fundButton = screen.getByText("Fund");
+    const sendButton = screen.getByText("Send");
+
+    expect(fundButton).toBeInTheDocument();
+    expect(sendButton).toBeInTheDocument();
+  });
+
+  it("calls requestFund function when Fund button is clicked", async () => {
+    setWallet();
+    await waitFor(() => {
+      render(<Home />);
+    });
+    const fundButton = screen.getByText("Fund");
+    const requestFundSpy = jest
+      .spyOn(window, "fetch")
+      .mockImplementationOnce(() =>
+        Promise.resolve(
+          new Response(JSON.stringify({ transaction_hash: "sample_hash" }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          })
+        )
+      );
+
+    fireEvent.click(fundButton);
+
+    await waitFor(() => {
+      expect(requestFundSpy).toHaveBeenCalled();
+    });
+
+    requestFundSpy.mockRestore();
+  });
+
+  // Update the tests
+  it("sets notification correctly when a successful fund request is made", async () => {
+    setWallet();
+    const setNotificationMock = jest.fn();
+
+    const requestFundSpy = jest
+      .spyOn(window, "fetch")
+      .mockImplementationOnce(() =>
+        Promise.resolve(
+          new Response(JSON.stringify({ transaction_hash: "sample_hash" }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          })
+        )
+      );
+
+    await act(async () => {
+      render(
+        <NotificationContext.Provider
+          value={{
+            notification: {},
+            setNotification: setNotificationMock,
+          }}
+        >
+          <Home />
+        </NotificationContext.Provider>
+      );
+    });
+    const fundButton = screen.getByText("Fund");
+
+    fireEvent.click(fundButton);
+
+    await waitFor(() => {
+      expect(requestFundSpy).toHaveBeenCalled();
+      expect(setNotificationMock).toHaveBeenCalled();
+    });
   });
 });
 

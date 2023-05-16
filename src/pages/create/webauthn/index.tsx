@@ -30,8 +30,8 @@ export default function Webauthn() {
     try {
       // fetch the challenge and the userId
       const [challengeRes, userIdRes] = await Promise.all([
-        fetch("/api/webauthn/challenge"),
-        fetch("/api/userId", {
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/webauthn/challenge`),
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/userId`, {
           method: "POST",
           body: JSON.stringify({ username }),
         }),
@@ -68,10 +68,13 @@ export default function Webauthn() {
       setCreating(true);
 
       const res: { accountAddress: string; transaction_hash: string } =
-        await fetch("/api/deployer/deploy", {
-          method: "POST",
-          body: pubKey,
-        }).then((response) => response.json());
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/deployer/deploy`,
+          {
+            method: "POST",
+            body: pubKey,
+          }
+        ).then((response) => response.json());
 
       addAccount({
         networkId: network,

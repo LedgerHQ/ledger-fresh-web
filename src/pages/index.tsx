@@ -32,12 +32,15 @@ export default function Home() {
 
   async function requestFund() {
     if (!account) return;
-    const res = await fetch("/api/deployer/fund", {
-      method: "POST",
-      body: JSON.stringify({
-        address: account.address,
-      }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/deployer/fund`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          address: account.address,
+        }),
+      }
+    );
     const body: any = await res.json();
 
     if (res.status != 200) {
@@ -57,6 +60,7 @@ export default function Home() {
       data: [],
       hidden: false,
     };
+
     setNotification(notif);
     addTransaction(notif);
   }

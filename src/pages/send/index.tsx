@@ -42,12 +42,15 @@ export default function Send() {
         },
       ];
 
-      const res: { nonce: string } = await fetch("/api/account/getNonce", {
-        method: "POST",
-        body: JSON.stringify({
-          address: account.address,
-        }),
-      }).then((response) => response.json());
+      const res: { nonce: string } = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            address: account.address,
+          }),
+        }
+      ).then((response) => response.json());
       // TODO getNonce
       const invoDetails = {
         walletAddress: account.address,

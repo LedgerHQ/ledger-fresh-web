@@ -122,7 +122,7 @@ export const signAndSendTransaction = async (
   const assertion = await sign(challenge, currentDomain, credentialId);
   const signature = formatAssertion(assertion);
   const res: { transaction_hash: string } = await fetch(
-    "/api/deployer/addTransaction",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}api/deployer/addTransaction`,
     {
       method: "POST",
       body: JSON.stringify({

@@ -3,6 +3,12 @@
   margin-bottom: 1em;
   background: var(--color-card-bg);
   border-radius: 12px;
+  display: flex;
+}
+
+.card.noBg {
+  background: none;
+  outline: 1px solid rgb(var(--color-gray-300));
 }
 
 .main {

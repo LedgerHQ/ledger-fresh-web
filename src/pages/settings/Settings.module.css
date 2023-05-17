@@ -1,0 +1,30 @@
+.main {
+  backdrop-filter: blur(10px);
+}
+
+.title {
+  padding: 0em 0.5em 1em;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1em;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 0 calc(50% - 10px);
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.card > div {
+  flex-direction: column;
+  justify-content: left;
+}
+
+.onboarding_button {
+  margin-bottom: 1rem;
+}

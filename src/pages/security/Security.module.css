@@ -1,0 +1,66 @@
+.main {
+  backdrop-filter: blur(10px);
+}
+
+.title {
+  padding: 0em 0.5em 1em;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1em;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 0 calc(50% - 10px);
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.card > div {
+  flex-direction: column;
+  justify-content: left;
+}
+
+.open {
+  flex: 1 0 calc(100% - 10px);
+  flex-wrap: wrap;
+}
+
+.appName {
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.card .apps {
+  display: flex;
+  align-items: baseline;
+  flex: 1 0 55%;
+  padding-top: 1em;
+}
+
+.card .app {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex: 1 0 calc(50% - 10px);
+  width: 100%;
+  justify-content: space-between;
+}
+
+.card .logo {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.remove {
+  font-weight: 400;
+  font-size: 0.6em;
+  background-color: rgb(var(--color-red));
+  border-radius: 8px;
+  padding: 4px;
+}

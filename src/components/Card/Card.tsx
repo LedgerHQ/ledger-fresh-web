@@ -5,7 +5,7 @@ import styles from "./Card.module.css";
 import { Badge } from "@/components/Badge";
 
 interface Props {
-  variant?: "primary" | "secondary" | "subtle" | "destructive";
+  variant?: "primary" | "secondary" | "subtle" | "destructive" | "noBg";
   title?: string | ReactNode;
   description?: string | ReactNode;
   icon?: ReactNode;
@@ -32,6 +32,7 @@ export function LinkCard({
         icon && !children && styles.iconButton,
         {
           [styles.buttonPrimary]: variant === "primary",
+          [styles.noBg]: variant === "noBg",
           [styles.buttonSecondary]: variant === "secondary",
           [styles.buttonSubtle]: variant === "subtle",
           [styles.buttonDestructive]: variant === "destructive",
@@ -49,7 +50,7 @@ export function LinkCard({
         </div>
         {img}
       </div>
-      {children && <span className={styles.label}>{children}</span>}
+      {children}
     </Link>
   );
 }

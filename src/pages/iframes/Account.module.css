@@ -1,0 +1,20 @@
+.account {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.buttonRow {
+  display: flex;
+}
+
+.buttonLeft {
+  margin-right: 1em;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+}

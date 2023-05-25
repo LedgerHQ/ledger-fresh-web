@@ -21,6 +21,7 @@
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
+    "@weblivion/react-penpal": "^2.0.0",
     "base64url": "^3.0.1",
     "bn.js": "^5.2.1",
     "clsx": "^1.2.1",

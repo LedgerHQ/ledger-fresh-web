@@ -11,6 +11,7 @@ specifiers:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
   '@types/testing-library__jest-dom': ^5.14.5
+  '@weblivion/react-penpal': ^2.0.0
   base64url: ^3.0.1
   bn.js: ^5.2.1
   clsx: ^1.2.1
@@ -35,6 +36,7 @@ dependencies:
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.10
+  '@weblivion/react-penpal': 2.0.0_react@18.2.0
   base64url: 3.0.1
   bn.js: 5.2.1
   clsx: 1.2.1
@@ -1193,6 +1195,15 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.51.0
       eslint-visitor-keys: 3.3.0
+    dev: false
+
+  /@weblivion/react-penpal/2.0.0_react@18.2.0:
+    resolution: {integrity: sha512-E/V43S9fORXhx8PzW4yTEt8jGAmuCIQq4ix7FTPUEe65z+tLy83ZM2r/I1MRYedxbLOumQUSqPCh9dit9piCWg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      penpal: 6.2.2
+      react: 18.2.0
     dev: false
 
   /abab/2.0.6:
@@ -3950,6 +3961,10 @@ packages:
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+    dev: false
+
+  /penpal/6.2.2:
+    resolution: {integrity: sha512-RQD7hTx14/LY7QoS3tQYO3/fzVtwvZI+JeS5udgsu7FPaEDjlvfK9HBcme9/ipzSPKnrxSgacI9PI7154W62YQ==}
     dev: false
 
   /picocolors/1.0.0:

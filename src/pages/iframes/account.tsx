@@ -15,6 +15,7 @@ import {
   InvocationsDetails,
   typedData,
 } from "starknet";
+import { Starkcheck } from "@/components/Starkcheck";
 
 let resolveTxHashPromise: (value: string) => void;
 let rejectTxHashPromise: (reason?: any) => void;
@@ -23,15 +24,17 @@ const txHashPromise: Promise<string> = new Promise((resolve, reject) => {
   rejectTxHashPromise = reject;
 });
 
+function apicall(fn: () => void, delay: number): void {
+  setTimeout(fn, delay);
+}
+
 export default function AccountModal() {
+  const [checked, setChecked] = useState<boolean>(false);
   const [calls, setCalls] = useState<Call>();
 
   const { parentMethods, connection } = usePenpalParent({
     methods: {
       enable() {
-        console.log("FRESH enable");
-        console.log(parentMethods);
-        console.log(connection);
         const accounts = getAccounts();
         return {
           address: accounts[0]?.address,
@@ -43,11 +46,9 @@ export default function AccountModal() {
         abis: Abi[] | undefined,
         transactionsDetail: any
       ) {
+        setChecked(false);
         setCalls(calls);
-
         const transaction_hash = await txHashPromise;
-        console.log("c fini message");
-        console.log(transaction_hash);
         return { transaction_hash };
       },
       async signMessage(typedData: typedData.TypedData) {
@@ -84,13 +85,15 @@ export default function AccountModal() {
     notify();
   }, [connection]);
 
+  useEffect(() => {
+    if (!calls) return;
+    parentMethods.shouldShow();
+    apicall(() => setChecked(true), 2000);
+  }, [calls]);
+
   const _execute = async () => {
     if (!calls) return;
-    console.log("FRESH EXECUTE");
-    console.log(parentMethods);
-    console.log(connection);
     const account = getAccounts()[0];
-    console.log(calls);
     const res: { nonce: string } = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
       {
@@ -112,7 +115,6 @@ export default function AccountModal() {
       invoDetails,
       account.authenticatorId
     );
-    console.log("tx hash", transaction_hash);
     resolveTxHashPromise(transaction_hash);
     parentMethods.shouldHide();
   };
@@ -121,11 +123,6 @@ export default function AccountModal() {
     rejectTxHashPromise("Transaction cancelled by user");
     parentMethods.shouldHide();
   };
-
-  useEffect(() => {
-    if (!calls) return;
-    parentMethods.shouldShow();
-  }, [calls]);
 
   // if (!calls) return <div>hidden :)</div>;
   return (
@@ -140,15 +137,18 @@ export default function AccountModal() {
           <div>Amount: {calls?.calldata?.[1].toString()} wei</div>
         </div>
       </div>
-      <div className={styles.buttonRow}>
-        <Button
-          className={styles.buttonLeft}
-          variant="destructive"
-          onClick={(_) => close()}
-        >
-          Reject /ᐠﹷ ‸ ﹷ ᐟ\
-        </Button>
-        <Button onClick={(_) => _execute()}> Sign ＼ʕ •ᴥ•ʔ／ </Button>
+      <div>
+        <Starkcheck checked={checked} />
+        <div className={styles.buttonRow}>
+          <Button
+            className={styles.buttonLeft}
+            variant="destructive"
+            onClick={(_) => close()}
+          >
+            Reject
+          </Button>
+          <Button onClick={(_) => _execute()}> Sign ＼ʕ •ᴥ•ʔ／ </Button>
+        </div>
       </div>
     </div>
   );

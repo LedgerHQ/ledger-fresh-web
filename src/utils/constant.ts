@@ -7,5 +7,5 @@ export const constants = {
     },
   },
   WEBAUTHN_CLS_HASH:
-    "0x6bcb2ecc68f478bd0546c451a0820ce19e2d562e3cfcb5906eede15aa81cc42",
+    "0x0769efb07a6e3508fe229895fe5a0033dc59de4be3e26e7a2bfe9c1d48ec90e2",
 };

@@ -8,7 +8,7 @@ export default function Created() {
 
   useEffect(() => {
     const accounts = getAccounts();
-    setUsername(accounts[0].name);
+    setUsername(accounts.pop()?.name || "");
   }, []);
 
   return (

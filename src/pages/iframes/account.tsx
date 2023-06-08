@@ -12,8 +12,11 @@ import {
   Abi,
   constants as starknetConstant,
   Call,
-  InvocationsDetails,
+  Signature,
+  number,
+  transaction,
   typedData,
+  InvocationsSignerDetails,
 } from "starknet";
 import { Starkcheck } from "@/components/Starkcheck";
 
@@ -24,13 +27,46 @@ const txHashPromise: Promise<string> = new Promise((resolve, reject) => {
   rejectTxHashPromise = reject;
 });
 
-function apicall(fn: () => void, delay: number): void {
-  setTimeout(fn, delay);
+const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
+
+async function starkCheck(
+  calls: Call[],
+  transactionsDetail: InvocationsSignerDetails,
+  signer: string
+): Promise<Signature> {
+  const calldata = transaction.fromCallsToExecuteCalldata(calls);
+
+  const response = await fetch(`${STARKCHECK_ENDPOINT}/starkchecks/verify`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      signer,
+      transaction: {
+        contractAddress: transactionsDetail.walletAddress,
+        nonce: number.toHex(number.toBN(transactionsDetail.nonce)),
+        calldata,
+        version: "1",
+        signature: [],
+        maxFee: number.toHex(number.toBN(transactionsDetail.maxFee || 0)),
+      },
+    }),
+  }).then((response) => response.json());
+  console.log("response starkcheck");
+  console.log(response);
+  // message indicates errors
+  if (response.message) {
+    throw response.message;
+  }
+  return response.signature;
 }
 
 export default function AccountModal() {
   const [checked, setChecked] = useState<boolean>(false);
+  const [error, setError] = useState<any>();
   const [calls, setCalls] = useState<Call>();
+  const [sig, setSig] = useState<Signature>();
 
   const { parentMethods, connection } = usePenpalParent({
     methods: {
@@ -88,11 +124,41 @@ export default function AccountModal() {
   useEffect(() => {
     if (!calls) return;
     parentMethods.shouldShow();
-    apicall(() => setChecked(true), 2000);
+    const starkCheckCall = async () => {
+      const account = getAccounts()[0];
+      const res: { nonce: string } = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            address: account.address,
+          }),
+        }
+      ).then((response) => response.json());
+      const invoDetails = {
+        walletAddress: account.address,
+        version: "0x1",
+        maxFee: "20000000000000000",
+        chainId: starknetConstant.StarknetChainId.TESTNET,
+        nonce: res.nonce,
+      };
+      try {
+        const starkCheckSignature = await starkCheck(
+          [calls],
+          invoDetails,
+          "0x1"
+        );
+        setSig(starkCheckSignature);
+        setChecked(true);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    starkCheckCall();
   }, [calls]);
 
   const _execute = async () => {
-    if (!calls) return;
+    if (!calls || !sig) return;
     const account = getAccounts()[0];
     const res: { nonce: string } = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
@@ -110,12 +176,15 @@ export default function AccountModal() {
       chainId: starknetConstant.StarknetChainId.TESTNET,
       nonce: res.nonce,
     };
+
     const transaction_hash = await signAndSendTransaction(
       [calls],
       invoDetails,
-      account.authenticatorId
+      account.authenticatorId,
+      sig
     );
     resolveTxHashPromise(transaction_hash);
+
     parentMethods.shouldHide();
   };
 
@@ -124,21 +193,25 @@ export default function AccountModal() {
     parentMethods.shouldHide();
   };
 
-  // if (!calls) return <div>hidden :)</div>;
+  if (!calls) return <div>hidden :)</div>;
+  // @ts-ignore
+  const destAddr = number.toHexString(calls?.calldata?.[0]);
   return (
     <div className={styles.account}>
       <div>
         <h2 className={styles.title}>Review call </h2>
         <div>
           <h4> Action: </h4>
-          <div> Transfer </div>
+          <div> Transfer StarkGate: ETH Token </div>
           <h4> CallData: </h4>
-          <div>To: {calls?.contractAddress.slice(0, 10)}...</div>
+          <div>
+            To: {destAddr.slice(0, 10)}... {destAddr.slice(-10)}
+          </div>
           <div>Amount: {calls?.calldata?.[1].toString()} wei</div>
         </div>
       </div>
       <div>
-        <Starkcheck checked={checked} />
+        <Starkcheck checked={checked} error={error} />
         <div className={styles.buttonRow}>
           <Button
             className={styles.buttonLeft}

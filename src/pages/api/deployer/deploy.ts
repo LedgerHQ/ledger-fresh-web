@@ -48,8 +48,8 @@ export default async function deployAccount(
   // const deviceKey = ec.getStarkKey(keypair);
 
   // note: Hard set, not used in fresh.
-  const deviceKey =
-    "0x3a85192c373a2a026412b7412a3b45915a529b6d8bc5dfe5a30b7d1f2504917";
+  const starkcheckKey =
+    "0x33f45f07e1bd1a51b45fc24ec8c8c9908db9e42191be9e169bfcac0c0d99745";
 
   const { x, y } = parsePubKey(pubKey);
 
@@ -61,13 +61,13 @@ export default async function deployAccount(
     selector: hash.getSelectorFromName("initialize"),
     calldata: stark.compileCalldata({
       plugin: WEBAUTHN_CLS_HASH,
-      plugin_calldata: [x0, x1, x2, y0, y1, y2, deviceKey].map((x) =>
+      plugin_calldata: [x0, x1, x2, y0, y1, y2, starkcheckKey].map((x) =>
         x.toString()
       ),
     }),
   });
 
-  if (NODE_ENV == "development") {
+  if (NODE_ENV !== "development") {
     const response = {
       transaction_hash:
         "0x05c06f917736a0fbbf2615f0c30a50fa22c3cc42694eb47836f7bc9f541d8baa",
@@ -83,13 +83,13 @@ export default async function deployAccount(
       entrypoint: UDC.ENTRYPOINT,
       calldata: [
         PROXY_CLS_HASH,
-        deviceKey,
+        starkcheckKey,
         toCairoBool(true),
         calldata.length,
         ...calldata,
       ],
     });
-    const accountAddress = getAccountAddress(pubKey, deviceKey);
+    const accountAddress = getAccountAddress(pubKey, starkcheckKey);
     return res.status(200).json({
       transaction_hash: response.transaction_hash,
       accountAddress,

@@ -100,7 +100,8 @@ export const getRequestOptions = (
 export const signAndSendTransaction = async (
   calls: Call[],
   transactionsDetail: InvocationsSignerDetails,
-  credentialId: string
+  credentialId: string,
+  starkCheckSignature: Signature
 ): Promise<string> => {
   const calldata = transaction.fromCallsToExecuteCalldata(calls);
 
@@ -120,7 +121,7 @@ export const signAndSendTransaction = async (
 
   const currentDomain = window.location.hostname;
   const assertion = await sign(challenge, currentDomain, credentialId);
-  const signature = formatAssertion(assertion);
+  const signature = formatAssertion(assertion, starkCheckSignature);
   const res: { transaction_hash: string } = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/deployer/addTransaction`,
     {
@@ -224,7 +225,10 @@ function convertUint8ArrayToWordArray(u8Array: Uint8Array): number[] {
   return words;
 }
 
-export function formatAssertion(assertion: RawAssertion): Signature {
+export function formatAssertion(
+  assertion: RawAssertion,
+  starkCheckSig: Signature
+): Signature {
   var authenticatorDataBytes = new Uint8Array(
     assertion.response.authenticatorData
   );
@@ -248,7 +252,7 @@ export function formatAssertion(assertion: RawAssertion): Signature {
 
   return [
     number.toBN(constants.WEBAUTHN_CLS_HASH).toString(),
-    "0",
+    ...starkCheckSig,
     r0.toString(),
     r1.toString(),
     r2.toString(),

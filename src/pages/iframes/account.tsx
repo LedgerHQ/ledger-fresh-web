@@ -19,6 +19,7 @@ import {
   InvocationsSignerDetails,
 } from "starknet";
 import { Starkcheck } from "@/components/Starkcheck";
+import { starkCheck } from "@/utils/starkcheck";
 
 let resolveTxHashPromise: (value: string) => void;
 let rejectTxHashPromise: (reason?: any) => void;
@@ -28,39 +29,6 @@ const txHashPromise: Promise<string> = new Promise((resolve, reject) => {
 });
 
 const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
-
-async function starkCheck(
-  calls: Call[],
-  transactionsDetail: InvocationsSignerDetails,
-  signer: string
-): Promise<Signature> {
-  const calldata = transaction.fromCallsToExecuteCalldata(calls);
-
-  const response = await fetch(`${STARKCHECK_ENDPOINT}/starkchecks/verify`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      signer,
-      transaction: {
-        contractAddress: transactionsDetail.walletAddress,
-        nonce: number.toHex(number.toBN(transactionsDetail.nonce)),
-        calldata,
-        version: "1",
-        signature: [],
-        maxFee: number.toHex(number.toBN(transactionsDetail.maxFee || 0)),
-      },
-    }),
-  }).then((response) => response.json());
-  console.log("response starkcheck");
-  console.log(response);
-  // message indicates errors
-  if (response.message) {
-    throw response.message;
-  }
-  return response.signature;
-}
 
 export default function AccountModal() {
   const [checked, setChecked] = useState<boolean>(false);

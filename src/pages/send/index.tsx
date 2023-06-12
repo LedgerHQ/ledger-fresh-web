@@ -16,11 +16,13 @@ import { useRouter } from "next/router";
 import { constants as starknetConstant, stark, uint256 } from "starknet";
 import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 import { parseUnits } from "ethers";
+import { starkCheck } from "@/utils/starkcheck";
 
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
   const [amount, setAmount] = useState<string>("1");
   const [address, setAddress] = useState<string>("");
+  const [error, setError] = useState<string>();
   const router = useRouter();
 
   const sendToken = async () => {
@@ -29,6 +31,7 @@ export default function Send() {
       const { low, high }: any = uint256.bnToUint256(
         parseUnits(amount, "ether").toString()
       );
+      console.log(low, high);
       const calldata = stark.compileCalldata({
         dest: address,
         low,
@@ -59,10 +62,13 @@ export default function Send() {
         chainId: starknetConstant.StarknetChainId.TESTNET,
         nonce: res.nonce,
       };
+
+      const starkCheckSignature = await starkCheck(call, invoDetails, "0x1");
       const transaction_hash = await signAndSendTransaction(
         call,
         invoDetails,
-        account.authenticatorId
+        account.authenticatorId,
+        starkCheckSignature
       );
 
       addTransaction({
@@ -74,8 +80,8 @@ export default function Send() {
       });
 
       router.push("/");
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      setError(JSON.stringify(e));
       throw e;
     }
   };
@@ -121,6 +127,7 @@ export default function Send() {
             placeholder="0xdeadbabe..."
           />
         </Main>
+        {error ? <div> {error} </div> : null}
         <section className={styles.footer}>
           <Button className={styles.sendButton} onClick={sendToken}>
             Send

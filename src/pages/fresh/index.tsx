@@ -7,16 +7,14 @@ import { usePenpalParent } from "@weblivion/react-penpal";
 import { useEffect, useState } from "react";
 import styles from "./Account.module.css";
 import { Button } from "@/components/Button";
+import { Calls } from "@/components/Calls";
 
 import {
   Abi,
   constants as starknetConstant,
   Call,
   Signature,
-  number,
-  transaction,
   typedData,
-  InvocationsSignerDetails,
 } from "starknet";
 import { Starkcheck } from "@/components/Starkcheck";
 import { starkCheck } from "@/utils/starkcheck";
@@ -33,7 +31,7 @@ const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
 export default function AccountModal() {
   const [checked, setChecked] = useState<boolean>(false);
   const [error, setError] = useState<any>();
-  const [calls, setCalls] = useState<Call>();
+  const [calls, setCalls] = useState<Call[]>();
   const [sig, setSig] = useState<Signature>();
 
   const { parentMethods, connection } = usePenpalParent({
@@ -46,12 +44,13 @@ export default function AccountModal() {
         };
       },
       async execute(
-        calls: Call,
+        calls: Call[] | Call,
         abis: Abi[] | undefined,
         transactionsDetail: any
       ) {
         setChecked(false);
-        setCalls(calls);
+        setCalls(Array.isArray(calls) ? calls : [calls]);
+        console.log(calls);
         const transaction_hash = await txHashPromise;
         return { transaction_hash };
       },
@@ -111,11 +110,7 @@ export default function AccountModal() {
         nonce: res.nonce,
       };
       try {
-        const starkCheckSignature = await starkCheck(
-          [calls],
-          invoDetails,
-          "0x1"
-        );
+        const starkCheckSignature = await starkCheck(calls, invoDetails, "0x1");
         setSig(starkCheckSignature);
         setChecked(true);
       } catch (error) {
@@ -146,7 +141,7 @@ export default function AccountModal() {
     };
 
     const transaction_hash = await signAndSendTransaction(
-      [calls],
+      calls,
       invoDetails,
       account.authenticatorId,
       sig
@@ -162,21 +157,12 @@ export default function AccountModal() {
   };
 
   if (!calls) return <div>hidden :)</div>;
-  // @ts-ignore
-  const destAddr = number.toHexString(calls?.calldata?.[0]);
+
   return (
     <div className={styles.account}>
       <div>
-        <h2 className={styles.title}>Review call </h2>
-        <div>
-          <h4> Action: </h4>
-          <div> Transfer StarkGate: ETH Token </div>
-          <h4> CallData: </h4>
-          <div>
-            To: {destAddr.slice(0, 10)}... {destAddr.slice(-10)}
-          </div>
-          <div>Amount: {calls?.calldata?.[1].toString()} wei</div>
-        </div>
+        <h2 className={styles.title}>Review calls </h2>
+        <Calls calls={calls} />
       </div>
       <div>
         <Starkcheck checked={checked} error={error} />

@@ -5,7 +5,6 @@ import {
 } from "@/services/accountStorage/account.storage";
 import { login } from "@/utils/webauthn";
 import { usePenpalParent } from "@weblivion/react-penpal";
-import router from "next/router";
 import { useState, useEffect } from "react";
 
 export default function LoginModal() {
@@ -18,12 +17,19 @@ export default function LoginModal() {
     }
   }, []);
   const { parentMethods, connection } = usePenpalParent({
-    methods: {},
+    methods: {
+      enable() {
+        return {
+          code: "LOGIN",
+          address: account?.address || "lol",
+        };
+      },
+    },
   });
 
   const handleConnect = async (e: any) => {
     e.preventDefault();
-
+    console.log(parentMethods, connection);
     if (await login()) {
       console.log("Authentication success!");
       if (connection) {

@@ -11,6 +11,7 @@ class ControllerConnector extends Connector {
   constructor(options?: { url?: string; origin?: string }) {
     super({ options });
     this._account = null;
+    this._frame = null;
     getWebWalletStarknetObject().then((iframe) => (this._frame = iframe));
   }
 
@@ -32,8 +33,13 @@ class ControllerConnector extends Connector {
   }
 
   async connect(): Promise<AccountInterface> {
+    if (!this._frame) {
+      throw new Error("iframe not found");
+    }
     await this._frame.enable();
-    this._account = this._frame.account;
+    if (this._frame.account) {
+      this._account = this._frame.account;
+    }
     if (!this._account) {
       throw new Error("account not found");
     }

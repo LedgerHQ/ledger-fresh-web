@@ -7,11 +7,8 @@ interface Props {
 
 export function Starkcheck({ checked, error, ...props }: Props) {
   if (error) {
-    return (
-      <div className={styles.row}>
-        Starkcheck error ❌ <p>{error}</p>
-      </div>
-    );
+    console.log(error);
+    return <div className={styles.row}>Starkcheck error ❌</div>;
   }
   if (!checked) {
     return (

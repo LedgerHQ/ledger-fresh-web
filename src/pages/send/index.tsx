@@ -20,7 +20,7 @@ import { starkCheck } from "@/utils/starkcheck";
 
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
-  const [amount, setAmount] = useState<string>("1");
+  const [amount, setAmount] = useState<string>("0.001");
   const [address, setAddress] = useState<string>("");
   const [error, setError] = useState<string>();
   const router = useRouter();
@@ -31,7 +31,6 @@ export default function Send() {
       const { low, high }: any = uint256.bnToUint256(
         parseUnits(amount, "ether").toString()
       );
-      console.log(low, high);
       const calldata = stark.compileCalldata({
         dest: address,
         low,

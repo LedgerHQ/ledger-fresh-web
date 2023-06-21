@@ -1,6 +1,5 @@
 import "./App.css";
 import erc20Abi from "./ERC20.json";
-import * as fresh from "@fresh/controller";
 import {
   type ConnectOptions,
   type DisconnectOptions,
@@ -85,7 +84,7 @@ function App() {
       },
     });
 
-    const { transaction_hash: transferTxHash } = await swo?.account?.execute(
+    const response = await swo?.account?.execute(
       {
         contractAddress: ADDR_GROM_TOKEN,
         entrypoint: "transfer",
@@ -94,9 +93,10 @@ function App() {
       undefined,
       { maxFee: 900_000_000_000_000 }
     );
+    const transferTxHash = response?.transaction_hash;
 
     console.log("Transfer Tx hash: " + transferTxHash);
-    setTxhash(transferTxHash);
+    setTxhash(transferTxHash || "");
   };
 
   const transferToken2 = async () => {
@@ -114,7 +114,7 @@ function App() {
       },
     });
 
-    const { transaction_hash: transferTxHash } = await swo?.account?.execute(
+    const response = await swo?.account?.execute(
       {
         contractAddress: ADDR_GROM_TOKEN,
         entrypoint: "transfer",
@@ -123,9 +123,10 @@ function App() {
       undefined,
       { maxFee: 900_000_000_000_000 }
     );
+    const transferTxHash = response?.transaction_hash;
 
     console.log("Transfer Tx hash: " + transferTxHash);
-    setTxhash(transferTxHash);
+    setTxhash(transferTxHash || "");
   };
 
   function openStarkScan(hash: string) {

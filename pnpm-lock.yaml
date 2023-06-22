@@ -99,8 +99,8 @@ importers:
       '@cartridge/controller':
         specifier: 0.3.18
         version: 0.3.18
-      '@fresh/webwallet':
-        specifier: workspace:^
+      fresh-webwallet:
+        specifier: ^0.1.6
         version: link:../packages/webwallet
       get-starknet:
         specifier: ^2.0.0
@@ -130,12 +130,12 @@ importers:
 
   packages/connector:
     dependencies:
-      '@fresh/webwallet':
-        specifier: workspace:^
-        version: link:../webwallet
       '@starknet-react/core':
         specifier: ^0.16.0
         version: 0.16.0(react-dom@18.2.0)(react@18.2.0)(starknet@4.22.0)
+      fresh-webwallet:
+        specifier: ^0.1.5
+        version: link:../webwallet
       starknet:
         specifier: ^4.22.0
         version: 4.22.0

@@ -1,6 +1,6 @@
 {
-  "name": "@fresh/webwallet",
-  "version": "0.1.0",
+  "name": "fresh-webwallet",
+  "version": "0.1.6",
   "description": "Fresh Controller",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

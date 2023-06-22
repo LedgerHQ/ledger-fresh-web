@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "composite": true,
-    "target": "es6",
-    "module": "ESNext",
-    "sourceMap": true,
+    "baseUrl": "./src",
     "outDir": "lib",
-    "strict": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "declaration": true,
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": false,
+    "jsx": "preserve",
+    "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true
+    "incremental": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "downlevelIteration": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

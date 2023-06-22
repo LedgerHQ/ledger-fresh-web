@@ -15,14 +15,7 @@ import {
   stark,
   uint256,
 } from "starknet";
-import {
-  getStarknetConnectedObject,
-  getWebWalletStarknetObject,
-} from "@fresh/webwallet";
-import { injectController as ij2 } from "@cartridge/controller";
-
-console.log(getStarknetConnectedObject);
-console.log(getWebWalletStarknetObject);
+import getWebWalletStarknetObject from "fresh-webwallet";
 
 getWebWalletStarknetObject();
 const ADDR_GROM_TOKEN =

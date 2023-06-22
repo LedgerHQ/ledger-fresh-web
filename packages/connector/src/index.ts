@@ -1,8 +1,7 @@
 import { Connector, EventHandler } from "@starknet-react/core";
-import { getWebWalletStarknetObject } from "@fresh/webwallet";
+import getWebWalletStarknetObject from "fresh-webwallet";
 import { AccountInterface, InvokeFunctionResponse } from "starknet";
 import type { StarknetWindowObject } from "get-starknet";
-import { ifError } from "assert";
 
 class ControllerConnector extends Connector {
   private _account: AccountInterface | null;

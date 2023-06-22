@@ -10,7 +10,7 @@ import {
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getAccountAddress } from "./utils";
 import { bnToCairoBN, parsePubKey } from "@/utils/webauthn";
-
+import policy from "./policy.json";
 // This file deploy a new account contract using the deployer already deployed on-chain
 // The script will fail if you deploy two different contracts using the same pubKey (as it is used as a salt)
 
@@ -31,6 +31,8 @@ export const UDC = {
 const provider = new SequencerProvider({
   network,
 });
+
+const ADD_POLICY_ENTRYPOINT = "set_policy";
 
 const toCairoBool = (value: boolean): string => (+value).toString();
 
@@ -78,18 +80,25 @@ export default async function deployAccount(
         "0x05bb8286aac5616e8d56edb0448649b73c1809e0d299cef941f87d748411b1fc",
     });
   } else {
-    const response = await deployerAccount.execute({
-      contractAddress: UDC.ADDRESS,
-      entrypoint: UDC.ENTRYPOINT,
-      calldata: [
-        PROXY_CLS_HASH,
-        starkcheckKey,
-        toCairoBool(true),
-        calldata.length,
-        ...calldata,
-      ],
-    });
     const accountAddress = getAccountAddress(pubKey, starkcheckKey);
+    const response = await deployerAccount.execute([
+      {
+        contractAddress: UDC.ADDRESS,
+        entrypoint: UDC.ENTRYPOINT,
+        calldata: [
+          PROXY_CLS_HASH,
+          starkcheckKey,
+          toCairoBool(true),
+          calldata.length,
+          ...calldata,
+        ],
+      },
+      {
+        contractAddress: accountAddress,
+        entrypoint: ADD_POLICY_ENTRYPOINT,
+        calldata: ["0x1", policy.length, ...policy],
+      },
+    ]);
     return res.status(200).json({
       transaction_hash: response.transaction_hash,
       accountAddress,

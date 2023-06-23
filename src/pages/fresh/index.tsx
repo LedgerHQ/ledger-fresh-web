@@ -35,6 +35,7 @@ export default function AccountModal() {
   const [sig, setSig] = useState<Signature>();
 
   const { parentMethods, connection } = usePenpalParent({
+    parentOrigin: "*",
     methods: {
       enable() {
         const accounts = getAccounts();
@@ -74,6 +75,8 @@ export default function AccountModal() {
       },
     },
   });
+
+  console.log(parentMethods, connection);
 
   useEffect(() => {
     const notify = async () => {

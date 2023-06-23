@@ -92,10 +92,6 @@ export const getStarknetConnectedObject = (
     isConnected: false,
     account: undefined,
     selectedAddress: undefined,
-    provider: new RpcProvider({
-      nodeUrl:
-        "https://starknet-goerli.g.alchemy.com/v2/FS0Fge2Rq1dlf2IsAIC_Ecy0UBp9uq51",
-    }),
     request: async (call) => {
       // @ts-ignore
       if (call.type === "wallet_watchAsset" && call.params.type === "ERC20") {

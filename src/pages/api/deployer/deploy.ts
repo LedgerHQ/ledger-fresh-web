@@ -69,39 +69,27 @@ export default async function deployAccount(
     }),
   });
 
-  if (NODE_ENV !== "development") {
-    const response = {
-      transaction_hash:
-        "0x05c06f917736a0fbbf2615f0c30a50fa22c3cc42694eb47836f7bc9f541d8baa",
-    };
-    return res.status(200).json({
-      transaction_hash: response.transaction_hash,
-      accountAddress:
-        "0x05bb8286aac5616e8d56edb0448649b73c1809e0d299cef941f87d748411b1fc",
-    });
-  } else {
-    const accountAddress = getAccountAddress(pubKey, starkcheckKey);
-    const response = await deployerAccount.execute([
-      {
-        contractAddress: UDC.ADDRESS,
-        entrypoint: UDC.ENTRYPOINT,
-        calldata: [
-          PROXY_CLS_HASH,
-          starkcheckKey,
-          toCairoBool(true),
-          calldata.length,
-          ...calldata,
-        ],
-      },
-      {
-        contractAddress: accountAddress,
-        entrypoint: ADD_POLICY_ENTRYPOINT,
-        calldata: ["0x1", policy.length, ...policy],
-      },
-    ]);
-    return res.status(200).json({
-      transaction_hash: response.transaction_hash,
-      accountAddress,
-    });
-  }
+  const accountAddress = getAccountAddress(pubKey, starkcheckKey);
+  const response = await deployerAccount.execute([
+    {
+      contractAddress: UDC.ADDRESS,
+      entrypoint: UDC.ENTRYPOINT,
+      calldata: [
+        PROXY_CLS_HASH,
+        starkcheckKey,
+        toCairoBool(true),
+        calldata.length,
+        ...calldata,
+      ],
+    },
+    {
+      contractAddress: accountAddress,
+      entrypoint: ADD_POLICY_ENTRYPOINT,
+      calldata: ["0x1", policy.length, ...policy],
+    },
+  ]);
+  return res.status(200).json({
+    transaction_hash: response.transaction_hash,
+    accountAddress,
+  });
 }

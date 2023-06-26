@@ -26,23 +26,35 @@ const txHashPromise: Promise<string> = new Promise((resolve, reject) => {
   rejectTxHashPromise = reject;
 });
 
+let resolveAccountPromise: (value: WalletAccount) => void;
+let rejectAccountPromise: (reason?: any) => void;
+const connectAccount: Promise<WalletAccount> = new Promise(
+  (resolve, reject) => {
+    resolveAccountPromise = resolve;
+    rejectAccountPromise = reject;
+  }
+);
+
 const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
 
 export default function AccountModal() {
   const [checked, setChecked] = useState<boolean>(false);
   const [error, setError] = useState<any>();
   const [calls, setCalls] = useState<Call[]>();
+  const [isConnect, setConnect] = useState<boolean>(false);
   const [sig, setSig] = useState<Signature>();
-  console.log("connect to parent");
   const { parentMethods, connection } = usePenpalParent({
-    debug: true,
     parentOrigin: "*",
     methods: {
-      enable() {
+      async enable() {
         const accounts = getAccounts();
+        setConnect(true);
+        const account = await connectAccount;
+        if (!accounts.length) throw "No account";
+        setConnect(false);
         return {
-          address: accounts[0]?.address,
-          chainid: accounts[0]?.networkId,
+          address: account.address,
+          chainid: account.networkId,
         };
       },
       async execute(
@@ -51,6 +63,7 @@ export default function AccountModal() {
         transactionsDetail: any
       ) {
         setChecked(false);
+        setError(false);
         setCalls(Array.isArray(calls) ? calls : [calls]);
         console.log(calls);
         const transaction_hash = await txHashPromise;
@@ -77,21 +90,23 @@ export default function AccountModal() {
     },
   });
 
-  console.log(parentMethods, connection);
+  // useEffect(() => {
+  //   const notify = async () => {
+  //     const accounts = getAccounts();
+  //     if (accounts.length) {
+  //       if (connection) {
+  //         await parentMethods.notifyAccountChange(accounts[0]?.address);
+  //         await parentMethods.notifyNetworkChange(accounts[0]?.networkId);
+  //       }
+  //     }
+  //   };
+  //   notify();
+  // }, [connection]);
 
   useEffect(() => {
-    const notify = async () => {
-      const accounts = getAccounts();
-      if (accounts.length) {
-        if (connection) {
-          await parentMethods.notifyAccountChange(accounts[0]?.address);
-          await parentMethods.notifyNetworkChange(accounts[0]?.networkId);
-        }
-      }
-    };
-    notify();
-  }, [connection]);
-
+    if (!isConnect) return;
+    parentMethods.shouldShow();
+  }, [isConnect]);
   useEffect(() => {
     if (!calls) return;
     parentMethods.shouldShow();
@@ -159,6 +174,45 @@ export default function AccountModal() {
     rejectTxHashPromise("Transaction cancelled by user");
     parentMethods.shouldHide();
   };
+
+  const handleConnect = async (account: WalletAccount) => {
+    console.log("handleConnect", account);
+    resolveAccountPromise(account);
+    parentMethods.shouldHide();
+  };
+
+  if (isConnect) {
+    const accounts: WalletAccount[] = getAccounts();
+    return (
+      <div className={styles.login}>
+        <h2 className={styles.title}> Choose your Fresh Account </h2>
+        {accounts && accounts.length > 0 ? (
+          accounts.map((account, index) => (
+            <form
+              key={index}
+              onSubmit={() => handleConnect(account)}
+              className={styles.button}
+            >
+              <Button type="submit">
+                Connect with {account.name} ({account.address.slice(0, 10)}...)
+              </Button>
+            </form>
+          ))
+        ) : (
+          <div>
+            Create an account on
+            <a
+              href="https://fresh-web.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+            >
+              fresh-web.vercel.app
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (!calls) return <div>hidden :)</div>;
 

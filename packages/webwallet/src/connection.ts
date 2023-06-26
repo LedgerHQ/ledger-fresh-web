@@ -63,6 +63,7 @@ export const createModal = async (targetUrl: string, shouldShow: boolean) => {
   const iframe = document.createElement("iframe");
   iframe.allow = "publickey-credentials-get *";
   iframe.src = targetUrl;
+  iframe.id = "fresh-modal";
   (iframe as any).loading = "eager";
   iframe.sandbox.add(
     "allow-scripts",
@@ -76,19 +77,6 @@ export const createModal = async (targetUrl: string, shouldShow: boolean) => {
   modal.style.display = shouldShow ? "block" : "none";
   // append the modal to the body
   window.document.body.appendChild(modal);
-
-  // wait for the iframe to load
-  await new Promise<void>((resolve, reject) => {
-    const pid = setTimeout(
-      () => reject(new Error("Timeout while loading an iframe")),
-      20000
-    );
-
-    iframe.addEventListener("load", async () => {
-      clearTimeout(pid);
-      resolve();
-    });
-  });
 
   return { iframe, modal };
 };
@@ -145,6 +133,5 @@ export const getConnection = async ({
       },
     },
   });
-
   return await connection.promise;
 };

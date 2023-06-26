@@ -25,8 +25,8 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@starknet-react/core": "0.16.0",
     "fresh-webwallet": "0.1.21",
+    "@starknet-react/core": "0.16.0",
     "starknet": "^4.22.0"
   }
 }

@@ -116,10 +116,8 @@ export const getStarknetConnectedObject = (
       if (ops?.starknetVersion === "v3") {
         throw Error("not implemented");
       }
-      console.log("enable");
-
       const res = await child.enable();
-      console.log("Address = " + res.address);
+      if (!res.address) return [];
       console.log(
         "Network = " +
           networks.find((n) => n.chainid === res.chainid)?.starknetProvider

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "get-starknet": "^2.0.0",
-    "fresh-webwallet": "^0.1.21",
+    "fresh-webwallet": "^0.1.6",
     "@cartridge/controller": "0.3.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

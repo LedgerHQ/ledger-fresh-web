@@ -101,7 +101,7 @@ importers:
         version: 0.3.18
       fresh-webwallet:
         specifier: ^0.1.6
-        version: 0.1.6(react@18.2.0)
+        version: 0.1.21(react@18.2.0)
       get-starknet:
         specifier: ^2.0.0
         version: 2.0.0(starknet@4.22.0)
@@ -131,11 +131,11 @@ importers:
   packages/connector:
     dependencies:
       '@starknet-react/core':
-        specifier: ^0.16.0
+        specifier: 0.16.0
         version: 0.16.0(react@18.2.0)(starknet@4.22.0)
       fresh-webwallet:
-        specifier: ^0.1.5
-        version: 0.1.6(react@18.2.0)
+        specifier: 0.1.21
+        version: 0.1.21(react@18.2.0)
       starknet:
         specifier: ^4.22.0
         version: 4.22.0
@@ -3616,8 +3616,8 @@ packages:
       map-cache: 0.2.2
     dev: true
 
-  /fresh-webwallet@0.1.6(react@18.2.0):
-    resolution: {integrity: sha512-dhLFEVQjCoecaVm9zMT/wPh4Q6CkXwV/xKrAL504JikkXeEzJoniGn2QYsKofEaqiztHLsmHYE7BQIADlN9bIA==}
+  /fresh-webwallet@0.1.21(react@18.2.0):
+    resolution: {integrity: sha512-j3fFdkZWvSUV/mfksVp9zq0n9ucgDg1iGWZ4Pk5zxhHG989+myAGcUzX9mEl6Daf+hqoXXun1nhyo0wQBybARw==}
     dependencies:
       '@weblivion/react-penpal': 2.0.0(react@18.2.0)
       get-starknet: 2.0.0(starknet@4.22.0)

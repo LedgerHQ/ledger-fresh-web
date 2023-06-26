@@ -132,7 +132,7 @@ importers:
     dependencies:
       '@starknet-react/core':
         specifier: 0.16.0
-        version: 0.16.0(react@18.2.0)(starknet@4.22.0)
+        version: 0.16.0(react-dom@18.2.0)(react@18.2.0)(starknet@4.22.0)
       fresh-webwallet:
         specifier: 0.1.21
         version: 0.1.21(react@18.2.0)
@@ -1438,13 +1438,13 @@ packages:
       '@sinonjs/commons': 1.8.6
     dev: true
 
-  /@starknet-react/core@0.16.0(react@18.2.0)(starknet@4.22.0):
+  /@starknet-react/core@0.16.0(react-dom@18.2.0)(react@18.2.0)(starknet@4.22.0):
     resolution: {integrity: sha512-VWBAilTrF3RAuD2laQJepx3Zhd2I8CHCA8p81hzAKlPyiUXIkLYLlGncckbRXX+a/wBSGZs+FNoqsUE0nOUYCg==}
     peerDependencies:
       react: ^17.0 || ^18.0
       starknet: next
     dependencies:
-      '@tanstack/react-query': 4.29.14(react@18.2.0)
+      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
       get-starknet-core: 2.0.0(starknet@4.22.0)
       immutable: 4.3.0
       react: 18.2.0
@@ -1464,7 +1464,7 @@ packages:
     resolution: {integrity: sha512-ElEAahtLWA7Y7c2Haw10KdEf2tx+XZl/Z8dmyWxZehxWK3TPL5qtXtb7kUEhvt/8u2cSP62fLxgh2qqzMMGnDQ==}
     dev: false
 
-  /@tanstack/react-query@4.29.14(react@18.2.0):
+  /@tanstack/react-query@4.29.14(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wh4bd/QIy85YgTDBtj/7/9ZkpRX41QdZuUL8xKoSzuMCukXvAE1/oJ4p0F15lqQq9W3g2pgcbr2Aa+CNvqABhg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -1478,6 +1478,7 @@ packages:
     dependencies:
       '@tanstack/query-core': 4.29.14
       react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
@@ -3615,18 +3616,6 @@ packages:
     dependencies:
       map-cache: 0.2.2
     dev: true
-
-  /fresh-webwallet@0.1.21(react@18.2.0):
-    resolution: {integrity: sha512-j3fFdkZWvSUV/mfksVp9zq0n9ucgDg1iGWZ4Pk5zxhHG989+myAGcUzX9mEl6Daf+hqoXXun1nhyo0wQBybARw==}
-    dependencies:
-      '@weblivion/react-penpal': 2.0.0(react@18.2.0)
-      get-starknet: 2.0.0(starknet@4.22.0)
-      penpal: 6.2.2
-      starknet: 4.22.0
-    transitivePeerDependencies:
-      - encoding
-      - react
-    dev: false
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}

@@ -33,8 +33,9 @@ export default function AccountModal() {
   const [error, setError] = useState<any>();
   const [calls, setCalls] = useState<Call[]>();
   const [sig, setSig] = useState<Signature>();
-
+  console.log("connect to parent");
   const { parentMethods, connection } = usePenpalParent({
+    debug: true,
     parentOrigin: "*",
     methods: {
       enable() {

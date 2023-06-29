@@ -3,11 +3,13 @@ import styles from "./Header.module.css";
 import { WalletSelector } from "@/components/WalletSelector";
 import { useState, useEffect } from "react";
 import { getAccounts } from "@/services/accountStorage/account.storage";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 export function Header({}: Props) {
   const [address, setAddress] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const accounts = getAccounts();
@@ -16,7 +18,12 @@ export function Header({}: Props) {
       : setAddress("No_account");
   }, []);
   return (
-    <div className={styles.header}>
+    <div
+      className={styles.header}
+      onClick={() => {
+        router.push("/");
+      }}
+    >
       <div className={styles.bg}></div>
       <div className={styles.bg2}></div>
       <div className={styles.wrapper}>
@@ -48,6 +55,10 @@ export function Header({}: Props) {
           width={18}
           height={18}
           priority
+          className={styles.copyIcon}
+          onClick={() => {
+            router.push("/settings");
+          }}
         />
       </div>
     </div>

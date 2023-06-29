@@ -200,7 +200,7 @@ export default function AccountModal() {
           ))
         ) : (
           <div>
-            Create an account on
+            Create an account on:
             <a
               href="https://fresh-web.vercel.app"
               target="_blank"
@@ -210,6 +210,13 @@ export default function AccountModal() {
             </a>
           </div>
         )}
+        <Button
+          onClick={() => {
+            parentMethods.shouldHide();
+          }}
+        >
+          Close{" "}
+        </Button>
       </div>
     );
   }

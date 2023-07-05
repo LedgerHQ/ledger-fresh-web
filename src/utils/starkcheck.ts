@@ -8,9 +8,13 @@ import {
 
 const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
 
+type ExtendedInvocationsSignerDetails = InvocationsSignerDetails & {
+  type: string; // replace 'YourType' with the actual type of the 'type' field
+};
+
 export async function starkCheck(
   calls: Call[],
-  transactionsDetail: InvocationsSignerDetails,
+  transactionsDetail: ExtendedInvocationsSignerDetails,
   signer: string
 ): Promise<Signature> {
   const calldata = transaction.fromCallsToExecuteCalldata(calls);
@@ -28,6 +32,7 @@ export async function starkCheck(
         calldata,
         version: "1",
         signature: [],
+        type: transactionsDetail.type || "INVOKE_FUNCTION",
         maxFee: number.toHex(number.toBN(transactionsDetail.maxFee || 0)),
       },
     }),

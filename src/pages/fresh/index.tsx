@@ -125,6 +125,7 @@ export default function AccountModal() {
         walletAddress: account.address,
         version: "0x1",
         maxFee: "20000000000000000",
+        type: "INVOKE_FUNCTION",
         chainId: starknetConstant.StarknetChainId.TESTNET,
         nonce: res.nonce,
       };
@@ -155,6 +156,7 @@ export default function AccountModal() {
       walletAddress: account.address,
       version: "0x1",
       maxFee: "20000000000000000",
+      type: "INVOKE_FUNCTION",
       chainId: starknetConstant.StarknetChainId.TESTNET,
       nonce: res.nonce,
     };

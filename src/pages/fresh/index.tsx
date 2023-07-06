@@ -28,12 +28,16 @@ const txHashPromise: Promise<string> = new Promise((resolve, reject) => {
 
 let resolveAccountPromise: (value: WalletAccount) => void;
 let rejectAccountPromise: (reason?: any) => void;
-const connectAccount: Promise<WalletAccount> = new Promise(
-  (resolve, reject) => {
+
+function createConnectAccountPromise(): Promise<WalletAccount> {
+  return new Promise<WalletAccount>((resolve, reject) => {
     resolveAccountPromise = resolve;
     rejectAccountPromise = reject;
-  }
-);
+  });
+}
+
+// We're not creating the Promise just yet
+let connectAccount: Promise<WalletAccount> | null = null;
 
 const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
 
@@ -47,15 +51,21 @@ export default function AccountModal() {
     parentOrigin: "*",
     methods: {
       async enable() {
-        const accounts = getAccounts();
+        // We create a new Promise each time enable is called
+        connectAccount = createConnectAccountPromise();
         setConnect(true);
-        const account = await connectAccount;
-        if (!accounts.length) throw "No account";
-        setConnect(false);
-        return {
-          address: account.address,
-          chainid: account.networkId,
-        };
+        try {
+          const account = await connectAccount;
+          setConnect(false);
+          return {
+            address: account.address,
+            chainid: account.networkId,
+          };
+        } catch (error) {
+          // Handle the error (for example, set some state variable)
+          setConnect(false);
+          throw error;
+        }
       },
       async execute(
         calls: Call[] | Call,
@@ -65,7 +75,6 @@ export default function AccountModal() {
         setChecked(false);
         setError(false);
         setCalls(Array.isArray(calls) ? calls : [calls]);
-        console.log(calls);
         const transaction_hash = await txHashPromise;
         return { transaction_hash };
       },
@@ -177,8 +186,12 @@ export default function AccountModal() {
     parentMethods.shouldHide();
   };
 
+  const closeLogin = () => {
+    rejectAccountPromise("Not in the mood to connect");
+    parentMethods.shouldHide();
+  };
+
   const handleConnect = async (account: WalletAccount) => {
-    console.log("handleConnect", account);
     resolveAccountPromise(account);
     parentMethods.shouldHide();
   };
@@ -214,7 +227,7 @@ export default function AccountModal() {
         )}
         <Button
           onClick={() => {
-            parentMethods.shouldHide();
+            closeLogin();
           }}
         >
           Close{" "}

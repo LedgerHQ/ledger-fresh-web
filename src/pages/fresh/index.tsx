@@ -204,36 +204,40 @@ export default function AccountModal() {
     return (
       <div className={styles.login}>
         <h2 className={styles.title}> Choose your Fresh Account </h2>
-        {accounts && accounts.length > 0 ? (
-          accounts.map((account, index) => (
-            <form
-              key={index}
-              onSubmit={() => handleConnect(account)}
-              className={styles.button}
-            >
-              <Button type="submit">
-                Connect with {account.name} ({account.address.slice(0, 10)}...)
-              </Button>
-            </form>
-          ))
-        ) : (
-          <div>
-            Create an account on:
-            <a
-              href="https://fresh-web.vercel.app"
-              target="_blank"
-              rel="noreferrer"
-            >
-              fresh-web.vercel.app
-            </a>
-          </div>
-        )}
+        <div>
+          {accounts && accounts.length > 0 ? (
+            accounts.map((account, index) => (
+              <form
+                key={index}
+                onSubmit={() => handleConnect(account)}
+                className={styles.button}
+              >
+                <Button type="submit">
+                  Connect with {account.name} ({account.address.slice(0, 10)}
+                  ...)
+                </Button>
+              </form>
+            ))
+          ) : (
+            <div>
+              Create an account on:
+              <a
+                href="https://fresh-web.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+              >
+                fresh-web.vercel.app
+              </a>
+            </div>
+          )}
+        </div>
         <Button
+          className={styles.button}
           onClick={() => {
             closeLogin();
           }}
         >
-          Close{" "}
+          Close
         </Button>
       </div>
     );

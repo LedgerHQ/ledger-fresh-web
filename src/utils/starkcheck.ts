@@ -12,11 +12,27 @@ type ExtendedInvocationsSignerDetails = InvocationsSignerDetails & {
   type: string; // replace 'YourType' with the actual type of the 'type' field
 };
 
+export type StarkcheckAnswer = {
+  balanceChanges: TransferEvent[];
+  signature: Signature;
+};
+
+interface TransferEvent {
+  sender: string;
+  receiver: string;
+  amount: string;
+  contractAddress: string;
+  symbol: string;
+  type: string;
+  name: string;
+  decimals: number;
+}
+
 export async function starkCheck(
   calls: Call[],
   transactionsDetail: ExtendedInvocationsSignerDetails,
   signer: string
-): Promise<Signature> {
+): Promise<StarkcheckAnswer> {
   const calldata = transaction.fromCallsToExecuteCalldata(calls);
 
   const response = await fetch(`${STARKCHECK_ENDPOINT}/starkchecks/verify`, {
@@ -43,5 +59,5 @@ export async function starkCheck(
   if (response.message) {
     throw response.message;
   }
-  return response.signature;
+  return response;
 }

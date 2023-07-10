@@ -17,7 +17,8 @@ import {
   typedData,
 } from "starknet";
 import { Starkcheck } from "@/components/Starkcheck";
-import { starkCheck } from "@/utils/starkcheck";
+import { starkCheck, StarkcheckAnswer } from "@/utils/starkcheck";
+import { BalanceChangesList } from "@/components/BalanceChanges";
 
 let resolveTxHashPromise: (value: string) => void;
 let rejectTxHashPromise: (reason?: any) => void;
@@ -43,10 +44,11 @@ const STARKCHECK_ENDPOINT = process.env.NEXT_PUBLIC_STARKCHECK_API_ENDPOINT!;
 
 export default function AccountModal() {
   const [checked, setChecked] = useState<boolean>(false);
+  const [account, setAccount] = useState<WalletAccount>();
   const [error, setError] = useState<any>();
   const [calls, setCalls] = useState<Call[]>();
   const [isConnect, setConnect] = useState<boolean>(false);
-  const [sig, setSig] = useState<Signature>();
+  const [sig, setSig] = useState<StarkcheckAnswer>();
   const { parentMethods, connection } = usePenpalParent({
     parentOrigin: "*",
     methods: {
@@ -57,6 +59,7 @@ export default function AccountModal() {
         try {
           const account = await connectAccount;
           setConnect(false);
+          setAccount(account);
           return {
             address: account.address,
             chainid: account.networkId,
@@ -174,7 +177,7 @@ export default function AccountModal() {
       calls,
       invoDetails,
       account.authenticatorId,
-      sig
+      sig.signature
     );
     resolveTxHashPromise(transaction_hash);
 
@@ -238,9 +241,18 @@ export default function AccountModal() {
 
   if (!calls) return <div>hidden :)</div>;
 
+  console.log(account, sig);
+
   return (
     <div className={styles.account}>
       <div>
+        {account && sig && sig.balanceChanges && (
+          <BalanceChangesList
+            accountAddress={account.address}
+            changes={sig.balanceChanges}
+          />
+        )}
+
         <h2 className={styles.title}>Review calls </h2>
         <Calls calls={calls} />
       </div>

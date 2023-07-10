@@ -68,7 +68,7 @@ export default function Send() {
         call,
         invoDetails,
         account.authenticatorId,
-        starkCheckSignature
+        starkCheckSignature.signature
       );
 
       addTransaction({

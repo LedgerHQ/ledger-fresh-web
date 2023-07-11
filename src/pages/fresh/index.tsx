@@ -245,8 +245,6 @@ export default function AccountModal() {
 
   if (!calls) return <div>hidden :)</div>;
 
-  console.log(account, sig);
-
   return (
     <div className={styles.account}>
       <div>
@@ -257,7 +255,6 @@ export default function AccountModal() {
           />
         )}
 
-        <h2 className={styles.title}>Review calls </h2>
         <Calls calls={calls} />
       </div>
       <div>

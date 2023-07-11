@@ -34,7 +34,7 @@ export const BalanceChangesList: React.FC<BalanceChangesListProps> = ({
 
   return (
     <div className={styles.balanceChangesList}>
-      <h4>Estimated Balance changes</h4>
+      <h3>Estimated Balance changes</h3>
       {changes.map((change, index) => (
         <div key={index} className={styles.balanceChange}>
           <div className={styles.tokenName}>{change.name}</div>

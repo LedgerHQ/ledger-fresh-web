@@ -25,8 +25,8 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
   if (call.entrypoint === "approve") {
     return (
       <div key={index}>
-        <h4 style={{ display: "flex" }} onClick={() => setIsOpen(!isOpen)}>
-          Action: {call.entrypoint}
+        <p style={{ display: "flex" }} onClick={() => setIsOpen(!isOpen)}>
+          {call.entrypoint}
           <Image
             src="/Icons/chevron-old-down.svg"
             alt="back"
@@ -34,7 +34,7 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
             height={14}
             priority
           />
-        </h4>
+        </p>
         {isOpen && (
           <div>
             <div> contract: {shorten(call.contractAddress)}</div>
@@ -49,7 +49,7 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
   } else if (call.entrypoint === "transfer") {
     return (
       <div key={index}>
-        <h4>Action: {call.entrypoint}</h4>
+        <p>{call.entrypoint}</p>
         <div>
           To {shorten(number.toHex(number.toBN(call?.calldata?.[0] || 0)))}
         </div>
@@ -59,8 +59,8 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
   } else {
     return (
       <div key={index}>
-        <h4 style={{ display: "flex" }} onClick={() => setIsOpen(!isOpen)}>
-          Action: {call.entrypoint}
+        <p style={{ display: "flex" }} onClick={() => setIsOpen(!isOpen)}>
+          {call.entrypoint}
           <Image
             src="/Icons/chevron-old-down.svg"
             alt="back"
@@ -68,7 +68,7 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
             height={14}
             priority
           />
-        </h4>
+        </p>
         {isOpen && (
           <ul>
             {call.calldata?.map((data, i) => (
@@ -82,10 +82,11 @@ const CallItem: React.FC<CallProps> = ({ call, index }) => {
 };
 export function Calls({ calls, ...props }: Props) {
   return (
-    <>
+    <div className={styles.calls}>
+      <h4 className={styles.title}>Review calls </h4>
       {calls.map((call, index) => (
         <CallItem call={call} index={index} key={index} />
       ))}
-    </>
+    </div>
   );
 }

@@ -118,10 +118,10 @@ export const getStarknetConnectedObject = (
       }
       const res = await child.enable();
       if (!res.address) return [];
-      console.log(
-        "Network = " +
-          networks.find((n) => n.chainid === res.chainid)?.starknetProvider
-      );
+      // console.log(
+      //   "Network = " +
+      //     networks.find((n) => n.chainid === res.chainid)?.starknetProvider
+      // );
       updateStarknetConnectedObject(starknet, res.address, res.chainid, child);
 
       return [res.address];

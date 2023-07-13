@@ -1,28 +1,70 @@
-import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./WalletSelector.module.css";
-import { useState, useEffect } from "react";
-import { getAccounts } from "@/services/accountStorage/account.storage";
+import {
+  getAccounts,
+  getSelectedAccount,
+  setStorageSelectedAccount,
+  WalletAccount,
+} from "@/services/accountStorage/account.storage";
+import { useAccount } from "@/services/accountStorage/AccountContext";
 
 interface Props {}
 
 export function WalletSelector({ ...props }: Props) {
-  const [username, setUsername] = useState<string>("");
+  const [accounts, setAccounts] = useState<WalletAccount[]>([]);
+  const { selectedAccount, setSelectedAccount } = useAccount();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const accounts = getAccounts();
-    accounts.length ? setUsername(accounts[0].name) : setUsername("No_account");
+    setAccounts(accounts);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
+  const handleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleAccountSelect = (name: string) => {
+    const selectedAccount = accounts.find((account) => account.name === name);
+    if (selectedAccount) {
+      setSelectedAccount(selectedAccount); // update context
+      setStorageSelectedAccount(selectedAccount); // update localStorage
+      setIsDropdownOpen(false);
+    }
+  };
+
   return (
-    <div className={styles.dropdown}>
-      {username}
-      <Image
-        src="/Icons/chevron-old-down.svg"
-        alt="back"
-        width={14}
-        height={14}
-        priority
-      />
+    <div className={styles.wrapper} onClick={handleDropdown} ref={dropdownRef}>
+      <div className={styles.thumbnail} />
+      <div>{selectedAccount?.name}</div>
+      {isDropdownOpen && (
+        <div className={styles.dropdownContent}>
+          {accounts.map((account) => (
+            <div
+              key={account.name}
+              onClick={() => handleAccountSelect(account.name)}
+            >
+              {account.name}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

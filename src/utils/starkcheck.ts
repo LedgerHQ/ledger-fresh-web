@@ -53,8 +53,7 @@ export async function starkCheck(
       },
     }),
   }).then((response) => response.json());
-  console.log("response starkcheck");
-  console.log(response);
+  console.log("response starkcheck", response);
   // message indicates errors
   if (response.message) {
     throw response.message;

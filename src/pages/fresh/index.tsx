@@ -1,6 +1,7 @@
 import {
   WalletAccount,
   getAccounts,
+  getSelectedAccount,
 } from "@/services/accountStorage/account.storage";
 import { signAndSendTransaction } from "@/utils/webauthn";
 import { usePenpalParent } from "@weblivion/react-penpal";
@@ -58,6 +59,7 @@ export default function AccountModal() {
         setConnect(true);
         try {
           const account = await connectAccount;
+          console.log(account);
           setConnect(false);
           setAccount(account);
           return {
@@ -102,28 +104,14 @@ export default function AccountModal() {
     },
   });
 
-  // useEffect(() => {
-  //   const notify = async () => {
-  //     const accounts = getAccounts();
-  //     if (accounts.length) {
-  //       if (connection) {
-  //         await parentMethods.notifyAccountChange(accounts[0]?.address);
-  //         await parentMethods.notifyNetworkChange(accounts[0]?.networkId);
-  //       }
-  //     }
-  //   };
-  //   notify();
-  // }, [connection]);
-
   useEffect(() => {
     if (!isConnect) return;
     parentMethods.shouldShow();
   }, [isConnect]);
   useEffect(() => {
-    if (!calls) return;
+    if (!calls || !account) return;
     parentMethods.shouldShow();
     const starkCheckCall = async () => {
-      const account = getAccounts()[0];
       const res: { nonce: string } = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
         {
@@ -153,8 +141,7 @@ export default function AccountModal() {
   }, [calls]);
 
   const _execute = async () => {
-    if (!calls || !sig) return;
-    const account = getAccounts()[0];
+    if (!calls || !sig || !account) return;
     const res: { nonce: string } = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/account/getNonce`,
       {

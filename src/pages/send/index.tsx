@@ -5,7 +5,7 @@ import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/Button";
 import {
-  getAccounts,
+  getSelectedAccount,
   WalletAccount,
 } from "@/services/accountStorage/account.storage";
 import { TokenBadge } from "@/components/TokenList";
@@ -87,9 +87,9 @@ export default function Send() {
   };
 
   useEffect(() => {
-    const accounts = getAccounts();
-    if (accounts.length) {
-      setAccount(accounts[0]);
+    const account = getSelectedAccount();
+    if (account) {
+      setAccount(account);
     }
   }, []);
 

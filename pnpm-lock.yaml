@@ -3617,6 +3617,18 @@ packages:
       map-cache: 0.2.2
     dev: true
 
+  /fresh-webwallet@0.1.21(react@18.2.0):
+    resolution: {integrity: sha512-j3fFdkZWvSUV/mfksVp9zq0n9ucgDg1iGWZ4Pk5zxhHG989+myAGcUzX9mEl6Daf+hqoXXun1nhyo0wQBybARw==}
+    dependencies:
+      '@weblivion/react-penpal': 2.0.0(react@18.2.0)
+      get-starknet: 2.0.0(starknet@4.22.0)
+      penpal: 6.2.2
+      starknet: 4.22.0
+    transitivePeerDependencies:
+      - encoding
+      - react
+    dev: false
+
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 

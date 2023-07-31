@@ -5,7 +5,7 @@ import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/Button";
 import {
-  getAccounts,
+  getSelectedAccount,
   WalletAccount,
 } from "@/services/accountStorage/account.storage";
 import { TokenBadge } from "@/components/TokenList";
@@ -16,11 +16,13 @@ import { useRouter } from "next/router";
 import { constants as starknetConstant, stark, uint256 } from "starknet";
 import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 import { parseUnits } from "ethers";
+import { starkCheck } from "@/utils/starkcheck";
 
 export default function Send() {
   const [account, setAccount] = useState<WalletAccount>();
-  const [amount, setAmount] = useState<string>("1");
+  const [amount, setAmount] = useState<string>("0.001");
   const [address, setAddress] = useState<string>("");
+  const [error, setError] = useState<string>();
   const router = useRouter();
 
   const sendToken = async () => {
@@ -56,13 +58,17 @@ export default function Send() {
         walletAddress: account.address,
         version: "0x1",
         maxFee: "20000000000000000",
+        type: "INVOKE_FUNCTION",
         chainId: starknetConstant.StarknetChainId.TESTNET,
         nonce: res.nonce,
       };
+
+      const starkCheckSignature = await starkCheck(call, invoDetails, "0x1");
       const transaction_hash = await signAndSendTransaction(
         call,
         invoDetails,
-        account.authenticatorId
+        account.authenticatorId,
+        starkCheckSignature.signature
       );
 
       addTransaction({
@@ -74,16 +80,16 @@ export default function Send() {
       });
 
       router.push("/");
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      setError(JSON.stringify(e));
       throw e;
     }
   };
 
   useEffect(() => {
-    const accounts = getAccounts();
-    if (accounts.length) {
-      setAccount(accounts[0]);
+    const account = getSelectedAccount();
+    if (account) {
+      setAccount(account);
     }
   }, []);
 
@@ -121,6 +127,7 @@ export default function Send() {
             placeholder="0xdeadbabe..."
           />
         </Main>
+        {error ? <div> {error} </div> : null}
         <section className={styles.footer}>
           <Button className={styles.sendButton} onClick={sendToken}>
             Send

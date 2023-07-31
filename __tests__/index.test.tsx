@@ -2,6 +2,7 @@ import { waitFor, render, screen, act } from "@testing-library/react";
 import * as erc20 from "@/services/token/erc20";
 import { fireEvent } from "@testing-library/react";
 import { NotificationContext } from "@/services/notificationProvider";
+import { AccountProvider } from "@/services/accountStorage/AccountContext";
 
 import Home from "@/pages/index";
 
@@ -41,14 +42,22 @@ Object.defineProperty(window, "localStorage", {
 
 describe("Home", () => {
   it("redirects to onboarding if no wallet", () => {
-    render(<Home />);
+    render(
+      <AccountProvider>
+        <Home />
+      </AccountProvider>
+    );
     expect(pushMock).toHaveBeenCalledWith("/onboarding");
   });
 
   it("renders home if a wallet is present in localStorage ", async () => {
     setWallet();
     await waitFor(() => {
-      render(<Home />);
+      render(
+        <AccountProvider>
+          <Home />
+        </AccountProvider>
+      );
     });
   });
 
@@ -56,7 +65,11 @@ describe("Home", () => {
     setWallet();
     const expectedValue = "0.01"; // Define the expected value
 
-    render(<Home />);
+    render(
+      <AccountProvider>
+        <Home />
+      </AccountProvider>
+    );
 
     await waitFor(() => {
       expect(erc20.fetchBalance).toHaveBeenCalled(); // Verify that fetchBalance is called
@@ -70,7 +83,11 @@ describe("Home", () => {
   it("renders Fund and Send buttons when a wallet is present", async () => {
     setWallet();
     await waitFor(() => {
-      render(<Home />);
+      render(
+        <AccountProvider>
+          <Home />
+        </AccountProvider>
+      );
     });
     const fundButton = screen.getByText("Fund");
     const sendButton = screen.getByText("Send");
@@ -82,7 +99,11 @@ describe("Home", () => {
   it("calls requestFund function when Fund button is clicked", async () => {
     setWallet();
     await waitFor(() => {
-      render(<Home />);
+      render(
+        <AccountProvider>
+          <Home />
+        </AccountProvider>
+      );
     });
     const fundButton = screen.getByText("Fund");
     const requestFundSpy = jest
@@ -129,7 +150,9 @@ describe("Home", () => {
             setNotification: setNotificationMock,
           }}
         >
-          <Home />
+          <AccountProvider>
+            <Home />
+          </AccountProvider>
         </NotificationContext.Provider>
       );
     });
@@ -147,6 +170,18 @@ describe("Home", () => {
 function setWallet() {
   localStorage.setItem(
     "fresh_account",
+    JSON.stringify([
+      {
+        address:
+          "0x5bb8286aac5616e8d56edb0448649b73c1809e0d299cef941f87d748411b1fc",
+        authenticatorId: "z7NhE6Np-tyJM9KTW_I2PvD8yCwjkx3Ym7WBpFEvqGE",
+        name: "Crema",
+        networkId: "goerli-alpha",
+      },
+    ])
+  );
+  localStorage.setItem(
+    "selected_account",
     JSON.stringify([
       {
         address:

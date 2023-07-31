@@ -4,6 +4,7 @@ import { Inter } from "@next/font/google";
 import React, { useState } from "react";
 import { NotificationContext } from "@/services/notificationProvider";
 import { Transaction } from "ethers";
+import { AccountProvider } from "@/services/accountStorage/AccountContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +19,11 @@ export default function App({ Component, pageProps }: AppProps) {
           letter-spacing: -0.02em;
         }
       `}</style>
-      <NotificationContext.Provider value={{ notification, setNotification }}>
-        <Component {...pageProps} />
-      </NotificationContext.Provider>
+      <AccountProvider>
+        <NotificationContext.Provider value={{ notification, setNotification }}>
+          <Component {...pageProps} />
+        </NotificationContext.Provider>
+      </AccountProvider>
     </>
   );
 }

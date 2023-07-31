@@ -1,0 +1,38 @@
+.balanceChangesList {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.balanceChangesList > h3 {
+  margin-bottom: 0.25em;
+}
+
+.balanceChange {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tokenSymbol {
+  flex: 2;
+  font-size: 16px;
+}
+
+.amount {
+  font-size: 16px;
+}
+
+.tokenType {
+  flex: 2;
+  font-size: 16px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}

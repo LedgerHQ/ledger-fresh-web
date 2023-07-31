@@ -7,7 +7,7 @@ import Main from "@/components/MainContainer";
 import { Header } from "@/components/Header";
 import { LinkButton, Button } from "@/components/Button";
 import {
-  getAccounts,
+  getSelectedAccount,
   WalletAccount,
 } from "@/services/accountStorage/account.storage";
 import { TokenList } from "@/components/TokenList";
@@ -16,28 +16,28 @@ import { AddLedgerCard } from "@/components/Card";
 import { useRouter } from "next/router";
 import { addTransaction } from "@/services/transactionStorage/transaction.storage";
 import { useNotificationContext } from "@/services/notificationProvider";
+import { useAccount } from "@/services/accountStorage/AccountContext";
 
 export default function Home() {
-  const [account, setAccount] = useState<WalletAccount>();
+  const { selectedAccount } = useAccount();
   const router = useRouter();
   const { setNotification } = useNotificationContext();
   useEffect(() => {
-    const accounts = getAccounts();
-    if (accounts.length) {
-      setAccount(accounts[0]);
+    const account = getSelectedAccount();
+    if (account) {
     } else {
       router.push("/onboarding");
     }
   }, []);
 
   async function requestFund() {
-    if (!account) return;
+    if (!selectedAccount) return;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/deployer/fund`,
       {
         method: "POST",
         body: JSON.stringify({
-          address: account.address,
+          address: selectedAccount.address,
         }),
       }
     );
@@ -45,7 +45,7 @@ export default function Home() {
 
     if (res.status != 200) {
       setNotification({
-        networkId: account.networkId,
+        networkId: selectedAccount.networkId,
         hash: body.transaction_hash,
         type: 99,
         data: [body.transaction_hash],
@@ -54,7 +54,7 @@ export default function Home() {
       return;
     }
     const notif = {
-      networkId: account.networkId,
+      networkId: selectedAccount.networkId,
       hash: body.transaction_hash,
       type: 21,
       data: [],
@@ -77,7 +77,7 @@ export default function Home() {
       </Head>
       <Header />
       <div className="page">
-        {account ? (
+        {selectedAccount ? (
           <Main variant="left">
             <div className={styles.buttonRow}>
               <Button variant="secondary" onClick={() => requestFund()}>
@@ -88,7 +88,7 @@ export default function Home() {
               </LinkButton>
             </div>
             <br />
-            <TokenList account={account} />
+            <TokenList account={selectedAccount} />
           </Main>
         ) : (
           <footer className={styles.footer}>

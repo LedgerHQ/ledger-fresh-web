@@ -1,0 +1,36 @@
+.account {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.buttonRow {
+  display: flex;
+}
+
+.buttonLeft {
+  margin-right: 1em;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+}
+
+.login {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 90vh;
+}
+.login > .title {
+  margin-top: 1em;
+}
+
+.button {
+  margin-top: 1em;
+  margin-left: 1em;
+  width: 90% !important;
+}

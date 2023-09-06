@@ -28,6 +28,7 @@ export function removeAccount(account: WalletAccount) {
 }
 
 export function setStorageSelectedAccount(account: WalletAccount) {
+  if (!account) return;
   localStorage.setItem("selected_account", JSON.stringify(account));
 }
 
